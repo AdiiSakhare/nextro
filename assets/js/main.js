@@ -20,7 +20,9 @@
   const byId = Object.fromEntries(products.map((p) => [p.id, p]));
   const inrFmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
   const inr = (n) => inrFmt.format(Math.round(n));
-  const imgUrl = (p, w) => `${C.cdn}${p.image}&width=${w}`;
+  // Product photos are used exactly as provided (1086×1448, 3:4). Paths contain spaces, so encode them.
+  const imgSrc = (p) => encodeURI(p.image);
+  const IMG_DIMS = 'width="1086" height="1448"';
   const savePct = (p) => Math.round((1 - p.bulk / p.retail) * 100);
   const gstNote = (C.pricing && C.pricing.gstNote) || '+ GST';
 
@@ -240,37 +242,27 @@
   }
 
   function cardHTML(p) {
+    // Minimal "offer card": the photo is the card; everything sits on it as solid plates (the photo itself is never tinted or cropped).
     return `
       <article class="pcard" id="product-${p.id}" data-id="${p.id}" data-cat="${p.category}" data-reveal>
-        <div class="pcard__media">
-          <span class="pcard__moq">Min. ${p.moq} units</span>
-          ${p.badge ? `<span class="pcard__badge">${p.badge}</span>` : ''}
-          <img src="${imgUrl(p, 640)}" srcset="${imgUrl(p, 420)} 420w, ${imgUrl(p, 640)} 640w, ${imgUrl(p, 900)} 900w" sizes="(max-width: 640px) 92vw, (max-width: 1040px) 46vw, 380px" alt="Nextro ${p.name} ${p.variant}" width="400" height="469" loading="lazy" decoding="async">
+        <img class="pcard__img" src="${imgSrc(p)}" alt="Nextro ${p.name} ${p.variant}" ${IMG_DIMS} loading="lazy" decoding="async">
+        <div class="pcard__tag">
+          <h3>${p.name}</h3>
+          <span>${p.variant}</span>
         </div>
-        <div class="pcard__body">
-          <div class="pcard__title">
-            <h3>${p.name}</h3><span>${p.variant}</span>
-            <a class="pcard__link" href="${p.url}" target="_blank" rel="noopener">Specs ${icon('i-arrow')}</a>
-          </div>
-          <p class="pcard__tag">${p.tagline}</p>
-          <ul class="pcard__specs">${p.specs.map((s) => `<li>${s}</li>`).join('')}</ul>
+        <a class="pcard__info" href="${p.url}" target="_blank" rel="noopener" aria-label="View ${p.name} full specs on getnextro.com (opens in a new tab)" title="Full specs">${icon('i-arrow-up-right')}</a>
+        <div class="pcard__plate">
+          <span class="pcard__burst"><svg aria-hidden="true"><use href="#burst"/></svg><span><small>Save</small><b>${savePct(p)}%</b></span></span>
           <div class="pcard__price">
-            <div>
-              <span class="pcard__label">Bulk price</span>
-              <span class="pcard__amount">${inr(p.bulk)}</span><span class="pcard__per">/unit ${gstNote}</span>
-            </div>
-            <div class="pcard__retail">
-              <span>Retail <s>${inr(p.retail)}</s></span>
-              <span class="pcard__save">Save ${savePct(p)}%</span>
-            </div>
+            <p class="pcard__amount-row"><span class="pcard__amount">${inr(p.bulk)}</span><span class="pcard__per">/unit ${gstNote}</span></p>
+            <p class="pcard__meta"><s>${inr(p.retail)}</s><span class="pcard__moq">Min. ${p.moq} units</span><span class="pcard__inq">${icon('i-check')} In your quote</span></p>
           </div>
           <div class="pcard__action" data-action>
-            <button type="button" class="btn btn--dark pcard__add" data-add>${icon('i-plus')} Add to quote</button>
+            <button type="button" class="btn btn--dark pcard__add" data-add aria-label="Add ${p.name} to quote (min. ${p.moq} units)">${icon('i-plus')} Add</button>
             <div class="pcard__stepper" hidden>
-              <p class="stepper__label"><span>Quantity (min. ${p.moq})</span><b>${icon('i-check')} In your quote</b></p>
               <div class="stepper">
                 <button type="button" data-dec aria-label="Decrease ${p.name} quantity">${icon('i-minus')}</button>
-                <input type="number" inputmode="numeric" min="${p.moq}" max="9999" step="1" value="${p.moq}" aria-label="${p.name} quantity" data-qty>
+                <input type="number" inputmode="numeric" min="${p.moq}" max="9999" step="1" value="${p.moq}" aria-label="${p.name} quantity (min. ${p.moq})" data-qty>
                 <button type="button" data-inc aria-label="Increase ${p.name} quantity">${icon('i-plus')}</button>
               </div>
             </div>
@@ -364,7 +356,7 @@
     if (dock) {
       dock.classList.toggle('has-items', t.count > 0);
       $('[data-tray-count]').textContent = t.units;
-      $('[data-tray-summary]').textContent = `${t.count} product${t.count === 1 ? '' : 's'} in your quote`;
+      $('[data-tray-summary]').innerHTML = `${t.count} product${t.count === 1 ? '' : 's'}<span class="hide-sm"> in your quote</span>`;
       $('[data-dock-cta-label]').textContent = t.count ? 'Get quote' : 'Get a Quote';
       const totalEl = $('[data-tray-total]');
       if (canAnimate && prev && prev.value !== t.value) {
@@ -422,7 +414,7 @@
             const p = byId[id];
             return `
               <button type="button" class="pick" data-goto="${p.id}">
-                <span class="pick__media"><img src="${imgUrl(p, 420)}" alt="" width="400" height="469" loading="lazy" decoding="async"></span>
+                <span class="pick__media"><img src="${imgSrc(p)}" alt="" ${IMG_DIMS} loading="lazy" decoding="async"></span>
                 <span class="pick__name">${p.name}<small>${p.variant}</small></span>
                 <span class="pick__price">${inr(p.bulk)}<small>/unit · min. ${p.moq}</small></span>
                 <span class="pick__go">See details ${icon('i-arrow')}</span>
@@ -525,7 +517,7 @@
       if (show) shown.push(card);
     });
     if (canAnimate) {
-      gsap.fromTo(shown, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power3.out', overwrite: true });
+      gsap.fromTo(shown, { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.06, ease: 'power3.out', overwrite: true, clearProps: 'transform' });
       ScrollTrigger.refresh();
     }
   }
@@ -592,7 +584,7 @@
     wrap.innerHTML = products.map((p) => `
       <label class="pchoice">
         <input type="checkbox" name="products" value="${p.name}" data-id="${p.id}">
-        <span><img src="${imgUrl(p, 120)}" alt="" width="44" height="44" loading="lazy"><b>${p.name}</b><small>${p.variant}</small></span>
+        <span><img src="${imgSrc(p)}" alt="" ${IMG_DIMS} loading="lazy" decoding="async"><b>${p.name}</b><small>${p.variant}</small></span>
       </label>`).join('') + `
       <label class="pchoice">
         <input type="checkbox" name="products" value="Not sure — help me choose">
@@ -1011,7 +1003,7 @@
   }
 
   function initLights() {
-    const hero = $('[data-lights="hero"]');
+    const hero = $('[data-lights="header"]');
     const finale = $('[data-lights="finale"]');
     [hero, finale].forEach((el) => el && buildLights(el));
 
@@ -1050,6 +1042,25 @@
     });
   }
 
+  /* The pinned garland hands over to the closing section's own garland: once that section's top edge
+     reaches the pinned lights, they ride up with the edge and tuck under the header, so only one string is ever visible. */
+  function initLightsHandoff() {
+    const frame = $('.lights--header');
+    const layer = frame && $('.lights__push', frame);
+    const finale = $('#finale');
+    if (!layer || !finale) return;
+    const update = () => {
+      const h = frame.offsetHeight;
+      const hangsAt = frame.getBoundingClientRect().top;        // where the pinned garland starts (viewport px)
+      const edge = finale.getBoundingClientRect().top;          // top edge of the closing section
+      const push = Math.min(0, Math.max(-h, edge - (hangsAt + h)));
+      layer.style.setProperty('--lights-push', `${push}px`);
+    };
+    window.addEventListener('scroll', update, { passive: true }); // scroll events already fire once per frame
+    window.addEventListener('resize', update);
+    update();
+  }
+
   function initMotion() {
     if (!canAnimate) return;
     root.classList.add('has-motion');
@@ -1066,7 +1077,7 @@
     const title = $('.hero__title');
     if (title) splitWords(title);
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
-    tl.from('.lights--hero svg', { y: -40, opacity: 0, duration: 1 }, 0)
+    tl.from('.lights--header svg', { y: -40, opacity: 0, duration: 1 }, 0)
       .from('.hero .eyebrow', { y: 16, opacity: 0, duration: 0.6 }, 0.1)
       .from('.hero__title .w__i', { yPercent: 110, duration: 0.9, stagger: 0.04 }, 0.2)
       .fromTo('.hero__title .hl', { backgroundSize: '0% 0.3em' }, { backgroundSize: '100% 0.3em', duration: 0.8, ease: 'power2.inOut' }, 0.9)
@@ -1095,7 +1106,7 @@
     ScrollTrigger.batch(reveals, {
       start: 'top 90%',
       once: true,
-      onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out', overwrite: true }),
+      onEnter: (els) => gsap.to(els, { opacity: 1, y: 0, duration: 0.8, stagger: 0.08, ease: 'power3.out', overwrite: true, clearProps: 'transform' }),
     });
 
     // Trust counter
@@ -1161,6 +1172,7 @@
     initDock();
     initAnchors();
     initLights();
+    initLightsHandoff();
     initMotion();
   }
 

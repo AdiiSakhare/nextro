@@ -20,7 +20,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0793/0137/8271/files/Frame1707478433.webp?v=1775713186&width=720">
 
-  <link rel="stylesheet" href="assets/css/styles.css">
+  <link rel="stylesheet" href="assets/css/styles.css?v=1">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
@@ -76,10 +76,14 @@
 
     <symbol id="sparkle" viewBox="0 0 24 24"><path fill="currentColor" stroke="none" d="M12 0c.8 7 5 11.2 12 12-7 .8-11.2 5-12 12-.8-7-5-11.2-12-12 7-.8 11.2-5 12-12Z"/></symbol>
 
+    <!-- Diwali starburst sticker (product cards) -->
+    <symbol id="burst" viewBox="0 0 100 100"><polygon points="50.0,6.0 63.4,17.7 81.1,18.9 82.3,36.6 94.0,50.0 82.3,63.4 81.1,81.1 63.4,82.3 50.0,94.0 36.6,82.3 18.9,81.1 17.7,63.4 6.0,50.0 17.7,36.6 18.9,18.9 36.6,17.7" fill="#FFEFAE" stroke="#FFEFAE" stroke-width="6" stroke-linejoin="round"/><circle cx="50" cy="50" r="32" fill="none" stroke="#E8A100" stroke-width="1.4" stroke-dasharray="1.5 3.2" stroke-linecap="round" opacity=".75"/></symbol>
+
     <!-- Line icons (Lucide-style) -->
     <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
     <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
     <symbol id="i-arrow-left" viewBox="0 0 24 24"><path d="M19 12H5M11 18l-6-6 6-6"/></symbol>
+    <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 17 17 7M8 7h9v9"/></symbol>
     <symbol id="i-chevron-down" viewBox="0 0 24 24"><path d="m6 9 6 6 6-6"/></symbol>
     <symbol id="i-chevron-left" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol>
     <symbol id="i-chevron-right" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol>
@@ -116,7 +120,7 @@
   <!-- ===================== TOP STRIP ===================== -->
   <div class="strip" role="note">
     <div class="container strip__inner">
-      <p class="when-before">🪔 Diwali bulk orders close <b data-last-label>1 Nov</b> · <span data-days-left>30 days left</span> for guaranteed delivery</p>
+      <p class="when-before">🪔 Diwali bulk orders close <b data-last-label>1 Nov</b> · <span data-days-left>30 days left</span><span class="hide-sm"> for guaranteed delivery</span></p>
       <p class="when-after">✨ Corporate gifting, all year round · Bulk pricing from 5 units</p>
     </div>
   </div>
@@ -140,13 +144,14 @@
         <a class="btn btn--primary btn--sm" href="#quote" data-track="cta_click" data-loc="header">Get a Quote</a>
       </div>
     </div>
+    <!-- Fairy lights hang from the sticky header, so they stay pinned at the top and in front of the page -->
+    <div class="lights lights--header" aria-hidden="true"><div class="lights__push" data-lights="header"></div></div>
   </header>
 
   <main id="main">
 
     <!-- ===================== 1 · HERO ===================== -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="lights lights--hero" data-lights="hero" aria-hidden="true"></div>
       <div class="hero__rangoli" aria-hidden="true"></div>
 
       <div class="container hero__grid">
@@ -225,7 +230,7 @@
       <div class="container">
         <header class="section-head" data-reveal>
           <p class="eyebrow"><span class="dot"></span>Why Nextro for corporate gifting</p>
-          <h2 class="h2" id="why-title">The gift they will use every day. <span class="nowrap">Not just on Diwali.</span></h2>
+          <h2 class="h2" id="why-title">The gift they will use every day.<br> Not just on Diwali.</h2>
           <p class="lead">Your team will get plenty of sweets this season. Give them something that protects them on every drive, every night, all year long.</p>
         </header>
 
@@ -399,7 +404,7 @@
       <div class="container">
         <header class="section-head" data-reveal>
           <p class="eyebrow"><span class="dot"></span>Every bulk order includes</p>
-          <h2 class="h2" id="inc-title">More than a gift. A complete gifting service.</h2>
+          <h2 class="h2" id="inc-title">More than a gift.<br> A complete gifting service.</h2>
         </header>
 
         <ul class="inc-grid">
@@ -836,7 +841,7 @@
     <div class="dock__inner">
       <div class="dock__info dock__info--deadline">
         <span class="diya diya--dock" data-diya></span>
-        <p class="when-before"><b>Diwali bulk orders close <span data-last-label>1 Nov</span></b><span data-days-left>30 days left</span></p>
+        <p class="when-before"><b><span class="hide-sm">Diwali bulk orders close</span><span class="show-sm">Orders close</span> <span data-last-label>1 Nov</span></b><span data-days-left>30 days left</span></p>
         <p class="when-after"><b>Year-round corporate gifting</b><span>Bulk pricing from 5 units</span></p>
       </div>
       <div class="dock__info dock__info--tray">
@@ -853,7 +858,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
-  <script src="assets/js/config.js" defer></script>
-  <script src="assets/js/main.js" defer></script>
+  <script src="assets/js/config.js?v=1" defer></script>
+  <script src="assets/js/main.js?v=1" defer></script>
 </body>
 </html>

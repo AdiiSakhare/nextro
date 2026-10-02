@@ -46,8 +46,10 @@ window.NEXTRO_CONFIG = {
     gstNote: '+ GST',
   },
 
-  cdn: 'https://cdn.shopify.com/s/files/1/0793/0137/8271/files/',
-
+  // Product photos live in assets/img/Product Images/ and are shown exactly as provided
+  // (1086×1448, 3:4 portrait). The layout adapts to this ratio — the images are never cropped or edited.
+  // Cards are intentionally minimal: they show name, variant, bulk price, MOQ, saving % and the add button.
+  // `tagline`, `specs` and `badge` below are not printed on the cards any more — kept here for easy reuse.
   products: [
     {
       id: 'x300',
@@ -60,7 +62,7 @@ window.NEXTRO_CONFIG = {
       bulk: 2850,
       moq: 10,
       badge: 'Best value',
-      image: 'Hero-img.webp?v=1775712704',
+      image: 'assets/img/Product Images/nextro x300.png',
       url: 'https://getnextro.com/products/nextro-dashcam-x300',
     },
     {
@@ -74,7 +76,7 @@ window.NEXTRO_CONFIG = {
       bulk: 4999,
       moq: 10,
       badge: '',
-      image: 'Hero-img_6a2f9ace-0941-45d6-b8a9-40cde6a7996d.webp?v=1775713000',
+      image: 'assets/img/Product Images/nextro x600.png',
       url: 'https://getnextro.com/products/nextro-dashcam-x600',
     },
     {
@@ -88,7 +90,7 @@ window.NEXTRO_CONFIG = {
       bulk: 8499,
       moq: 5,
       badge: 'Premium pick',
-      image: 'Frame1707478433.webp?v=1775713186',
+      image: 'assets/img/Product Images/nextro x700.png',
       url: 'https://getnextro.com/products/nextro-dashcam-x700-dualvision-plus',
     },
     {
@@ -102,7 +104,7 @@ window.NEXTRO_CONFIG = {
       bulk: 10999,
       moq: 5,
       badge: 'Flagship',
-      image: '1st-image.webp?v=1775713449',
+      image: 'assets/img/Product Images/nextro x900.png',
       url: 'https://getnextro.com/products/nextro-dashcam-x900-trivision',
     },
     {
@@ -116,7 +118,7 @@ window.NEXTRO_CONFIG = {
       bulk: 1599,
       moq: 10,
       badge: 'Tech gift',
-      image: 'opyxg4h0wiuf74ikchjs.webp?v=1780482168',
+      image: 'assets/img/Product Images/nextro n70.png',
       url: 'https://getnextro.com/products/nextro-n70-2-in-1-wireless-adapter-for-carplay-android-auto-glass',
     },
     {
@@ -130,7 +132,7 @@ window.NEXTRO_CONFIG = {
       bulk: 1549,
       moq: 10,
       badge: '',
-      image: 'ryrwpecnzammpeuls0rj.webp?v=1780482009',
+      image: 'assets/img/Product Images/nextro n50.png',
       url: 'https://getnextro.com/products/nextro-n50-2-in-1-wireless-adapter-for-carplay-android-auto-plastic',
     },
   ],
