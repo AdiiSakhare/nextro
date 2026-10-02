@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 400 400" fill="none" stroke="#1E1206" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <defs>
+    <path id="petal" d="M200 62c26 30 28 58 0 80-28-22-26-50 0-80Z"/>
+    <path id="petal-in" d="M200 84c12 16 13 30 0 42-13-12-12-26 0-42Z"/>
+    <path id="leaf" d="M200 14c10 10 12 20 0 32-12-12-10-22 0-32Z"/>
+    <circle id="dot" cx="200" cy="44" r="4" fill="#1E1206" stroke="none"/>
+    <path id="arc" d="M172 160a40 40 0 0 1 56 0"/>
+  </defs>
+  <circle cx="200" cy="200" r="22"/>
+  <circle cx="200" cy="200" r="10" fill="#1E1206" stroke="none"/>
+  <circle cx="200" cy="200" r="46"/>
+  <circle cx="200" cy="200" r="150"/>
+  <circle cx="200" cy="200" r="158" stroke-dasharray="2 10"/>
+  <circle cx="200" cy="200" r="190"/>
+  <g>
+    <use href="#petal" xlink:href="#petal"/><use href="#petal" xlink:href="#petal" transform="rotate(45 200 200)"/><use href="#petal" xlink:href="#petal" transform="rotate(90 200 200)"/><use href="#petal" xlink:href="#petal" transform="rotate(135 200 200)"/><use href="#petal" xlink:href="#petal" transform="rotate(180 200 200)"/><use href="#petal" xlink:href="#petal" transform="rotate(225 200 200)"/><use href="#petal" xlink:href="#petal" transform="rotate(270 200 200)"/><use href="#petal" xlink:href="#petal" transform="rotate(315 200 200)"/>
+  </g>
+  <g>
+    <use href="#petal-in" xlink:href="#petal-in" transform="rotate(22.5 200 200)"/><use href="#petal-in" xlink:href="#petal-in" transform="rotate(67.5 200 200)"/><use href="#petal-in" xlink:href="#petal-in" transform="rotate(112.5 200 200)"/><use href="#petal-in" xlink:href="#petal-in" transform="rotate(157.5 200 200)"/><use href="#petal-in" xlink:href="#petal-in" transform="rotate(202.5 200 200)"/><use href="#petal-in" xlink:href="#petal-in" transform="rotate(247.5 200 200)"/><use href="#petal-in" xlink:href="#petal-in" transform="rotate(292.5 200 200)"/><use href="#petal-in" xlink:href="#petal-in" transform="rotate(337.5 200 200)"/>
+  </g>
+  <g>
+    <use href="#leaf" xlink:href="#leaf"/><use href="#leaf" xlink:href="#leaf" transform="rotate(22.5 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(45 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(67.5 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(90 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(112.5 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(135 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(157.5 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(180 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(202.5 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(225 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(247.5 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(270 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(292.5 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(315 200 200)"/><use href="#leaf" xlink:href="#leaf" transform="rotate(337.5 200 200)"/>
+  </g>
+  <g>
+    <use href="#dot" xlink:href="#dot" transform="rotate(11.25 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(33.75 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(56.25 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(78.75 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(101.25 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(123.75 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(146.25 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(168.75 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(191.25 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(213.75 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(236.25 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(258.75 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(281.25 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(303.75 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(326.25 200 200)"/><use href="#dot" xlink:href="#dot" transform="rotate(348.75 200 200)"/>
+  </g>
+  <g>
+    <use href="#arc" xlink:href="#arc"/><use href="#arc" xlink:href="#arc" transform="rotate(90 200 200)"/><use href="#arc" xlink:href="#arc" transform="rotate(180 200 200)"/><use href="#arc" xlink:href="#arc" transform="rotate(270 200 200)"/>
+  </g>
+</svg>
