@@ -17,55 +17,18 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="preconnect" href="https://cdn.shopify.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  <link rel="preload" as="image" href="https://cdn.shopify.com/s/files/1/0793/0137/8271/files/Frame1707478433.webp?v=1775713186&width=720">
+  <link href="https://fonts.googleapis.com/css2?family=Host+Grotesk:wght@500&family=Onest:wght@400;500;600;700;800&family=Schibsted+Grotesk:wght@400;700&family=Space+Grotesk:wght@700&display=swap" rel="stylesheet">
+  <link rel="preload" as="image" href="assets/img/hero/diwali-hero.png">
 
+  <link rel="stylesheet" href="assets/css/base.css?v=1">
+  <link rel="stylesheet" href="assets/css/components.css?v=1">
   <link rel="stylesheet" href="assets/css/styles.css?v=1">
 </head>
 <body>
   <a class="skip-link" href="#main">Skip to content</a>
 
-  <!-- ===================== SVG SPRITE (icons, gift box, gradients) ===================== -->
+  <!-- ===================== SVG SPRITE (icons; the diya / bulb gradients are injected by components.js) ===================== -->
   <svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
-    <defs>
-      <radialGradient id="g-flame-glow">
-        <stop offset="0" stop-color="#FFD66B" stop-opacity=".85"/>
-        <stop offset=".45" stop-color="#FFB703" stop-opacity=".35"/>
-        <stop offset="1" stop-color="#FF8A00" stop-opacity="0"/>
-      </radialGradient>
-      <linearGradient id="g-flame" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#FFE27A"/>
-        <stop offset=".55" stop-color="#FFB703"/>
-        <stop offset="1" stop-color="#FF6A00"/>
-      </linearGradient>
-      <linearGradient id="g-diya" x1="0" y1="0" x2="0" y2="1">
-        <stop offset="0" stop-color="#E2622A"/>
-        <stop offset="1" stop-color="#A93A0E"/>
-      </linearGradient>
-      <radialGradient id="g-bulb-a"><stop offset="0" stop-color="#FFD66B" stop-opacity=".9"/><stop offset="1" stop-color="#FFD66B" stop-opacity="0"/></radialGradient>
-      <radialGradient id="g-bulb-b"><stop offset="0" stop-color="#FF8A00" stop-opacity=".85"/><stop offset="1" stop-color="#FF8A00" stop-opacity="0"/></radialGradient>
-      <radialGradient id="g-bulb-c"><stop offset="0" stop-color="#FF5C8A" stop-opacity=".8"/><stop offset="1" stop-color="#FF5C8A" stop-opacity="0"/></radialGradient>
-      <radialGradient id="g-bulb-d"><stop offset="0" stop-color="#FFF4D6" stop-opacity=".95"/><stop offset="1" stop-color="#FFF4D6" stop-opacity="0"/></radialGradient>
-    </defs>
-
-    <!-- Gift box: colours come from CSS vars --box, --lid, --ribbon -->
-    <symbol id="gift" viewBox="0 0 200 200">
-      <path d="M100 54C84 24 52 22 54 44c1.6 15 26 15 46 10Z" style="fill:var(--ribbon,#FFD34D)"/>
-      <path d="M100 54c16-30 48-32 46-10-1.6 15-26 15-46 10Z" style="fill:var(--ribbon,#FFD34D)"/>
-      <path d="M100 54C88 36 70 34 67 43c-2 7 16 11 33 11Z" fill="#000" opacity=".14"/>
-      <path d="M100 54c12-18 30-20 33-11 2 7-16 11-33 11Z" fill="#000" opacity=".14"/>
-      <rect x="26" y="88" width="148" height="104" rx="10" style="fill:var(--box,#FF8A00)"/>
-      <rect x="26" y="88" width="148" height="12" fill="#000" opacity=".12"/>
-      <rect x="14" y="54" width="172" height="40" rx="9" style="fill:var(--lid,#FF9F2E)"/>
-      <rect x="14" y="54" width="172" height="9" rx="4.5" fill="#fff" opacity=".22"/>
-      <rect x="88" y="54" width="24" height="138" style="fill:var(--ribbon,#FFD34D)"/>
-      <rect x="88" y="54" width="7" height="138" fill="#fff" opacity=".2"/>
-      <rect x="89" y="45" width="22" height="18" rx="7" style="fill:var(--ribbon,#FFD34D)"/>
-      <g fill="#fff" opacity=".16">
-        <circle cx="50" cy="122" r="5"/><circle cx="66" cy="152" r="5"/><circle cx="46" cy="174" r="5"/>
-        <circle cx="140" cy="118" r="5"/><circle cx="156" cy="148" r="5"/><circle cx="138" cy="172" r="5"/>
-      </g>
-    </symbol>
 
     <symbol id="sweets" viewBox="0 0 200 160">
       <rect x="18" y="52" width="164" height="96" rx="12" fill="#D9CFC3"/>
@@ -91,14 +54,7 @@
     <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
     <symbol id="i-phone" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92Z"/></symbol>
     <symbol id="i-mail" viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></symbol>
-    <symbol id="i-truck" viewBox="0 0 24 24"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2M15 18H9M19 18h2a1 1 0 0 0 1-1v-3.65a1 1 0 0 0-.22-.62l-3.48-4.35A1 1 0 0 0 17.52 8H14"/><circle cx="17" cy="18" r="2"/><circle cx="7" cy="18" r="2"/></symbol>
-    <symbol id="i-receipt" viewBox="0 0 24 24"><path d="M4 2v20l2-1 2 1 2-1 2 1 2-1 2 1 2-1 2 1V2l-2 1-2-1-2 1-2-1-2 1-2-1-2 1Z"/><path d="M16 8h-6a2 2 0 1 0 0 4h4a2 2 0 1 1 0 4H8M12 17.5v-11"/></symbol>
-    <symbol id="i-card" viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M7 10h10M7 14h6"/></symbol>
     <symbol id="i-gift" viewBox="0 0 24 24"><rect x="3" y="8" width="18" height="4" rx="1"/><path d="M12 8v13M19 12v7a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2v-7M7.5 8a2.5 2.5 0 0 1 0-5C10 3 12 8 12 8s2-5 4.5-5a2.5 2.5 0 0 1 0 5"/></symbol>
-    <symbol id="i-shield" viewBox="0 0 24 24"><path d="M20 13c0 5-3.5 7.5-7.66 8.95a1 1 0 0 1-.67-.01C7.5 20.5 4 18 4 13V6a1 1 0 0 1 1-1c2 0 4.5-1.2 6.24-2.72a1.17 1.17 0 0 1 1.52 0C14.51 3.81 17 5 19 5a1 1 0 0 1 1 1Z"/><path d="m9 12 2 2 4-4"/></symbol>
-    <symbol id="i-wrench" viewBox="0 0 24 24"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76Z"/></symbol>
-    <symbol id="i-package" viewBox="0 0 24 24"><path d="M11 21.73a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73ZM12 22V12M3.3 7l8.7 5 8.7-5"/></symbol>
-    <symbol id="i-shuffle" viewBox="0 0 24 24"><path d="m18 14 4 4-4 4M18 2l4 4-4 4M2 18h1.97a4 4 0 0 0 3.3-1.7l5.45-7.6a4 4 0 0 1 3.3-1.7H22M2 6h1.97a4 4 0 0 1 3.6 2.2M22 18h-6.04a4 4 0 0 1-3.3-1.8l-.36-.45"/></symbol>
     <symbol id="i-car" viewBox="0 0 24 24"><path d="M19 17h2c.6 0 1-.4 1-1v-3c0-.9-.7-1.7-1.5-1.9C18.7 10.6 16 10 16 10s-1.3-1.4-2.2-2.3c-.5-.4-1.1-.7-1.8-.7H5c-.6 0-1.1.4-1.4.9l-1.4 2.9A3.7 3.7 0 0 0 2 12v4c0 .6.4 1 1 1h2M9 17h6"/><circle cx="7" cy="17" r="2"/><circle cx="17" cy="17" r="2"/></symbol>
     <symbol id="i-gem" viewBox="0 0 24 24"><path d="M6 3h12l4 6-10 13L2 9Z"/><path d="M11 3 8 9l4 13 4-13-3-6M2 9h20"/></symbol>
     <symbol id="i-pin" viewBox="0 0 24 24"><path d="M20 10c0 5-5.54 10.19-7.4 11.8a1 1 0 0 1-1.2 0C9.54 20.19 4 15 4 10a8 8 0 0 1 16 0"/><circle cx="12" cy="10" r="3"/></symbol>
@@ -129,7 +85,7 @@
   <header class="header" id="top">
     <div class="container header__inner">
       <a class="header__logo" href="#top" aria-label="Nextro — back to top">
-        <img src="https://getnextro.com/cdn/shop/files/Frame_763112_1.png?v=1773211376&width=300" alt="Nextro" width="147" height="24">
+        <span class="header__brand"><img src="assets/svg/figma/logo-mark.svg" alt="" width="43" height="24"><img src="assets/svg/figma/logo-wordmark.svg" alt="Nextro" width="97" height="23"></span>
         <span class="header__pill">Diwali Bulk</span>
       </a>
       <nav class="header__nav" aria-label="Page sections">
@@ -139,7 +95,7 @@
       </nav>
       <div class="header__actions">
         <a class="icon-btn icon-btn--wa" data-wa data-track="whatsapp_click" data-loc="header" href="https://wa.me/919096960651" target="_blank" rel="noopener" aria-label="Chat on WhatsApp">
-          <svg class="i i--fill"><use href="#i-whatsapp"/></svg>
+          <img src="assets/svg/figma/icon-whatsapp-green.svg" alt="" width="22" height="22">
         </a>
         <a class="btn btn--primary btn--sm" href="#quote" data-track="cta_click" data-loc="header">Get a Quote</a>
       </div>
@@ -150,103 +106,37 @@
 
   <main id="main">
 
-    <!-- ===================== 1 · HERO ===================== -->
+    <!-- ===================== 1 · HERO (Figma 27:4 — artwork only; the headline/CTA copy is parked for now) ===================== -->
     <section class="hero" aria-labelledby="hero-title">
-      <div class="hero__rangoli" aria-hidden="true"></div>
-
-      <div class="container hero__grid">
-        <div class="hero__copy">
-          <p class="eyebrow eyebrow--pill"><span class="dot"></span>Diwali Corporate Gifting · 2026</p>
-          <h1 class="hero__title" id="hero-title">
-            The Corporate Diwali Gift That <span class="hl">Drives With Them</span> All Year.
-          </h1>
-          <p class="hero__sub">Bulk orders for companies, fleets and gifting programmes. Dashcams and wireless CarPlay adaptors, starting at just <b>5&nbsp;units</b>.</p>
-
-          <div class="hero__ctas">
-            <a class="btn btn--primary btn--lg" href="#quote" data-track="cta_click" data-loc="hero">
-              Get a Quote <svg class="i"><use href="#i-arrow"/></svg>
-            </a>
-            <a class="btn btn--light btn--lg" data-wa data-track="whatsapp_click" data-loc="hero" href="https://wa.me/919096960651" target="_blank" rel="noopener">
-              <svg class="i i--fill i--wa"><use href="#i-whatsapp"/></svg> WhatsApp Us
-            </a>
-            <a class="btn btn--ghost btn--lg" data-tel data-track="call_click" data-loc="hero" href="tel:+919096960651">
-              <svg class="i"><use href="#i-phone"/></svg> Call Us
-            </a>
-          </div>
-
-          <ul class="hero__trust">
-            <li><svg class="i"><use href="#i-check"/></svg>Trusted by 500+ drivers across India</li>
-            <li><svg class="i"><use href="#i-check"/></svg>Free shipping on bulk orders</li>
-            <li><svg class="i"><use href="#i-check"/></svg>GST invoice</li>
-          </ul>
-          <p class="hero__chip"><svg class="i"><use href="#i-pin"/></svg> <b>Free installation</b> in Pune &amp; Mumbai</p>
-        </div>
-
-        <!-- HERO VISUAL — placeholder composition.
-             To use a custom graphic: replace the contents of .hero__visual with
-             <img src="assets/img/hero-gifts.webp" alt="" class="hero__art"> -->
-        <div class="hero__visual" aria-hidden="true">
-          <div class="hv-glow"></div>
-          <div class="hv-card-wrap">
-            <div class="hv-card">
-              <img src="https://cdn.shopify.com/s/files/1/0793/0137/8271/files/Frame1707478433.webp?v=1775713186&width=720" alt="" width="400" height="469" fetchpriority="high">
-              <span class="hv-sash"></span>
-            </div>
-            <svg class="hv-bow" viewBox="0 0 120 80"><path d="M60 40C44 8 10 6 14 30c3 16 28 16 46 10Z" fill="#FFC21A"/><path d="M60 40c16-32 50-34 46-10-3 16-28 16-46 10Z" fill="#FFC21A"/><path d="M60 40C49 22 30 20 27 29c-2 7 17 11 33 11Z" fill="#E08A00" opacity=".45"/><path d="M60 40c11-18 30-20 33-11 2 7-17 11-33 11Z" fill="#E08A00" opacity=".45"/><path d="M54 44 40 76l10-3 6 7 6-28Zm12 0 14 32-10-3-6 7-6-28Z" fill="#FFB703"/><rect x="49" y="31" width="22" height="18" rx="8" fill="#FFD34D"/></svg>
-            <div class="hv-tag">Shubh Deepavali</div>
-          </div>
-          <div class="hv-price"><span>Bulk prices from</span><b data-min-price>₹1,549</b><span>/unit</span></div>
-          <svg class="hv-gift hv-gift--big gift--saffron"><use href="#gift"/></svg>
-          <svg class="hv-gift hv-gift--top gift--marigold"><use href="#gift"/></svg>
-          <svg class="hv-gift hv-gift--small gift--night"><use href="#gift"/></svg>
-          <span class="diya hv-diya hv-diya--1" data-diya></span>
-          <span class="diya hv-diya hv-diya--2" data-diya></span>
-          <svg class="spark hv-spark hv-spark--1"><use href="#sparkle"/></svg>
-          <svg class="spark hv-spark hv-spark--2"><use href="#sparkle"/></svg>
-          <svg class="spark hv-spark hv-spark--3"><use href="#sparkle"/></svg>
-          <svg class="spark hv-spark hv-spark--4"><use href="#sparkle"/></svg>
-        </div>
-      </div>
-
-      <!-- 1b · Trust strip -->
-      <div class="container">
-        <div class="trustbar" data-reveal>
-          <div class="trustbar__logos" data-logos hidden>
-            <p class="trustbar__label">Trusted by teams at</p>
-            <div class="trustbar__logo-row" data-logo-row></div>
-          </div>
-          <ul class="trustbar__stats">
-            <li><b data-count="500" data-suffix="+">500+</b><span>drivers trust Nextro</span></li>
-            <li><b>1 year</b><span>warranty on every unit</span></li>
-            <li><b>Free</b><span>pan-India shipping</span></li>
-            <li><b>24 hrs</b><span>quote turnaround</span></li>
-          </ul>
-        </div>
+      <h1 class="sr-only" id="hero-title">The Corporate Diwali Gift That Drives With Them All Year.</h1>
+      <div class="hero__stage">
+        <img class="hero__art" src="assets/img/hero/diwali-hero.png" alt="Nextro dashcams and wireless CarPlay adaptors on festive Diwali podiums with diyas and marigolds" width="1672" height="1079" fetchpriority="high">
       </div>
     </section>
 
-    <!-- ===================== 2 · WHY NEXTRO ===================== -->
+    <!-- ===================== 2 · WHY NEXTRO (Figma 27:43) ===================== -->
     <section class="section why" id="why" aria-labelledby="why-title">
+      <img class="rangoli rangoli--why" src="assets/svg/rangoli-why.svg" alt="" aria-hidden="true" width="1440" height="1440">
       <div class="container">
         <header class="section-head" data-reveal>
-          <p class="eyebrow"><span class="dot"></span>Why Nextro for corporate gifting</p>
-          <h2 class="h2" id="why-title">The gift they will use every day.<br> Not just on Diwali.</h2>
+          <p class="eyebrow">Why Nextro for corporate gifting</p>
+          <h2 class="h2" id="why-title">The gift they will use every<br class="d-br"> day. Not just on Diwali.</h2>
           <p class="lead">Your team will get plenty of sweets this season. Give them something that protects them on every drive, every night, all year long.</p>
         </header>
 
         <div class="why__grid">
           <article class="why-card" data-reveal>
-            <span class="why-card__icon"><svg class="i"><use href="#i-car"/></svg></span>
+            <span class="why-card__icon"><img src="assets/svg/figma/why-car.svg" alt="" width="26" height="26"></span>
             <h3>Used every single day, not just on Diwali.</h3>
             <p>Not a box that's opened once. A Nextro switches on every time they start the car.</p>
           </article>
           <article class="why-card" data-reveal>
-            <span class="why-card__icon"><svg class="i"><use href="#i-gem"/></svg></span>
+            <span class="why-card__icon"><img src="assets/svg/figma/why-gem.svg" alt="" width="26" height="26"></span>
             <h3>A premium product that reflects your brand's taste.</h3>
             <p>A considered, well-made gift that feels like a thank-you, not a checkbox.</p>
           </article>
           <article class="why-card" data-reveal>
-            <span class="why-card__icon"><svg class="i"><use href="#i-shield"/></svg></span>
+            <span class="why-card__icon"><img src="assets/svg/figma/why-shield.svg" alt="" width="26" height="26"></span>
             <h3>Protects the people who receive it, on every drive.</h3>
             <p>Night vision, G-sensor crash lock and parking monitoring keep them covered, day and night.</p>
           </article>
@@ -254,12 +144,14 @@
 
         <!-- Sweets vs Nextro -->
         <div class="compare" data-compare>
-          <p class="compare__quote" data-reveal>Most Diwali gifts say <em>“we remembered”</em>.<br>A Nextro says <em>“we thought about you”</em>.</p>
+          <p class="compare__quote" data-reveal>Most Diwali gifts say <em>“we remembered”.</em><br>A Nextro says <em>“we thought about you”.</em></p>
           <div class="compare__grid">
             <div class="compare-card compare-card--sweets" data-compare-sweets>
-              <svg class="compare-card__art" viewBox="0 0 200 160"><use href="#sweets"/></svg>
-              <h3>The usual Diwali box</h3>
-              <p class="compare-card__kicker">Sweets &amp; dry fruits</p>
+              <img class="compare-card__art compare-card__art--sweets" src="assets/svg/figma/compare-sweets.svg" alt="" width="96" height="77">
+              <div class="compare-card__title">
+                <h3>The usual Diwali box</h3>
+                <p class="compare-card__kicker">Sweets &amp; dry fruits</p>
+              </div>
               <dl>
                 <div><dt>Lasts</dt><dd>About two weeks</dd></div>
                 <div><dt>Used</dt><dd>Once, maybe twice</dd></div>
@@ -267,121 +159,34 @@
                 <div><dt>Ends up</dt><dd>Regifted or forgotten</dd></div>
               </dl>
             </div>
-            <div class="compare__vs" aria-hidden="true">vs</div>
             <div class="compare-card compare-card--nextro" data-compare-nextro>
-              <svg class="compare-card__art gift--saffron" viewBox="0 0 200 200"><use href="#gift"/></svg>
-              <h3>A Nextro gift</h3>
-              <p class="compare-card__kicker">Dashcam or wireless CarPlay</p>
+              <img class="compare-card__art" src="assets/svg/figma/compare-gift.svg" alt="" width="84" height="84">
+              <div class="compare-card__title">
+                <h3>A Nextro gift</h3>
+                <p class="compare-card__kicker">Dashcam or wireless CarPlay</p>
+              </div>
               <dl>
-                <div><dt>Lasts</dt><dd>Years, with a 1-year warranty</dd></div>
+                <div><dt>Lasts</dt><dd>Years, with a <span class="nb">1-year</span> warranty</dd></div>
                 <div><dt>Used</dt><dd>On every single drive</dd></div>
                 <div><dt>Remembered</dt><dd>Every time they start the car</dd></div>
                 <div><dt>Ends up</dt><dd>Watching over them on the road</dd></div>
               </dl>
             </div>
+            <div class="compare__vs" aria-hidden="true"><img src="assets/svg/figma/compare-vs-flower.svg" alt="" width="52" height="52"><span>vs</span></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== 3 · USE CASES ===================== -->
-    <section class="section usecases" id="for-you" aria-labelledby="uc-title">
-      <div class="container">
-        <div class="sheet">
-          <header class="section-head" data-reveal>
-            <p class="eyebrow"><span class="dot"></span>Who it's for</p>
-            <h2 class="h2" id="uc-title">One gift. Every kind of gifting.</h2>
-            <p class="lead">Pick your situation and see what buyers like you choose.</p>
-          </header>
-
-          <div class="tabs" data-tabs>
-            <div class="tabs__list" role="tablist" aria-label="Gifting use cases">
-              <button class="tab" role="tab" id="tab-hr" aria-controls="panel-hr" aria-selected="true">HR &amp; Admin</button>
-              <button class="tab" role="tab" id="tab-founders" aria-controls="panel-founders" aria-selected="false" tabindex="-1">Founders</button>
-              <button class="tab" role="tab" id="tab-fleet" aria-controls="panel-fleet" aria-selected="false" tabindex="-1">Fleet owners</button>
-              <button class="tab" role="tab" id="tab-dealers" aria-controls="panel-dealers" aria-selected="false" tabindex="-1">Car dealerships</button>
-              <button class="tab" role="tab" id="tab-insurance" aria-controls="panel-insurance" aria-selected="false" tabindex="-1">Insurance</button>
-              <button class="tab" role="tab" id="tab-realestate" aria-controls="panel-realestate" aria-selected="false" tabindex="-1">Real estate</button>
-              <button class="tab" role="tab" id="tab-events" aria-controls="panel-events" aria-selected="false" tabindex="-1">Events</button>
-            </div>
-
-            <div class="tabs__panels">
-              <div class="tab-panel" role="tabpanel" id="panel-hr" aria-labelledby="tab-hr" data-usecase="HR & Admin" data-picks="x300,n70">
-                <div class="tab-panel__copy">
-                  <h3>Diwali gifts your team will actually use.</h3>
-                  <p>Every dry fruit box ends by November. Every drive they take from now on, the Nextro is there. Fits ₹2,000–₹10,000 per-employee budgets.</p>
-                  <a class="btn btn--dark" href="#quote" data-quote-usecase>Get a quote for my team <svg class="i"><use href="#i-arrow"/></svg></a>
-                </div>
-                <div class="tab-panel__picks" data-picks-slot></div>
-              </div>
-              <div class="tab-panel" role="tabpanel" id="panel-founders" aria-labelledby="tab-founders" data-usecase="Founders & Startups" data-picks="x700,n70" hidden>
-                <div class="tab-panel__copy">
-                  <h3>Premium, practical, and it makes you look good.</h3>
-                  <p>A gift with taste for a team that builds with taste. Sony STARVIS night vision or wireless CarPlay: the kind of gift people show off.</p>
-                  <a class="btn btn--dark" href="#quote" data-quote-usecase>Get a quote for my team <svg class="i"><use href="#i-arrow"/></svg></a>
-                </div>
-                <div class="tab-panel__picks" data-picks-slot></div>
-              </div>
-              <div class="tab-panel" role="tabpanel" id="panel-fleet" aria-labelledby="tab-fleet" data-usecase="Fleet" data-picks="x600,x900" hidden>
-                <div class="tab-panel__copy">
-                  <h3>10 vehicles. 10 dashcams. One decision that pays for itself.</h3>
-                  <p>For fleets this isn't gifting, it's infrastructure. Insurance disputes, driver safety and route compliance, all on record with GPS.</p>
-                  <a class="btn btn--dark" href="#quote" data-quote-usecase>Get a fleet quote <svg class="i"><use href="#i-arrow"/></svg></a>
-                </div>
-                <div class="tab-panel__picks" data-picks-slot></div>
-              </div>
-              <div class="tab-panel" role="tabpanel" id="panel-dealers" aria-labelledby="tab-dealers" data-usecase="Car dealership" data-picks="x300,n70" hidden>
-                <div class="tab-panel__copy">
-                  <h3>Close more deals with a gift that drives off the lot.</h3>
-                  <p>Add a Nextro to every new-car delivery. A premium add-on buyers value, at a bulk price that protects your margin.</p>
-                  <a class="btn btn--dark" href="#quote" data-quote-usecase>Get a dealership quote <svg class="i"><use href="#i-arrow"/></svg></a>
-                </div>
-                <div class="tab-panel__picks" data-picks-slot></div>
-              </div>
-              <div class="tab-panel" role="tabpanel" id="panel-insurance" aria-labelledby="tab-insurance" data-usecase="Insurance" data-picks="x300,x600" hidden>
-                <div class="tab-panel__copy">
-                  <h3>A safety gift that reduces claims.</h3>
-                  <p>Gift policyholders a dashcam. Clear footage settles disputes faster and encourages safer driving.</p>
-                  <a class="btn btn--dark" href="#quote" data-quote-usecase>Get a quote <svg class="i"><use href="#i-arrow"/></svg></a>
-                </div>
-                <div class="tab-panel__picks" data-picks-slot></div>
-              </div>
-              <div class="tab-panel" role="tabpanel" id="panel-realestate" aria-labelledby="tab-realestate" data-usecase="Real estate" data-picks="x700,n70" hidden>
-                <div class="tab-panel__copy">
-                  <h3>A premium welcome for new home owners.</h3>
-                  <p>Hand over the keys with a gift for the car parked downstairs. Thoughtful, premium and remembered.</p>
-                  <a class="btn btn--dark" href="#quote" data-quote-usecase>Get a quote <svg class="i"><use href="#i-arrow"/></svg></a>
-                </div>
-                <div class="tab-panel__picks" data-picks-slot></div>
-              </div>
-              <div class="tab-panel" role="tabpanel" id="panel-events" aria-labelledby="tab-events" data-usecase="Events" data-picks="x700,n70" hidden>
-                <div class="tab-panel__copy">
-                  <h3>A VIP gift speakers and sponsors will remember.</h3>
-                  <p>Skip the trophy and the tote bag. Give speakers, VIPs and sponsors something they'll use on the drive home.</p>
-                  <a class="btn btn--dark" href="#quote" data-quote-usecase>Get a quote <svg class="i"><use href="#i-arrow"/></svg></a>
-                </div>
-                <div class="tab-panel__picks" data-picks-slot></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== 4 · PRODUCTS ===================== -->
+    <!-- ===================== 3 · PRODUCTS (Figma 27:5690) ===================== -->
     <section class="section products" id="products" aria-labelledby="products-title">
+      <img class="rangoli rangoli--products" src="assets/svg/rangoli-products.svg" alt="" aria-hidden="true" width="834" height="834">
       <div class="container">
         <header class="section-head" data-reveal>
-          <p class="eyebrow"><span class="dot"></span>The gift range</p>
-          <h2 class="h2" id="products-title">Choose your Nextro. Mix and match freely.</h2>
-          <p class="lead">Flat bulk pricing per unit. No haggling, no hidden costs, and free shipping across India.</p>
+          <p class="eyebrow">The gift range</p>
+          <h2 class="h2" id="products-title">Choose your <span class="accent">Nextro.</span><br> Mix and match freely.</h2>
+          <p class="lead">Flat bulk pricing per unit. No haggling, no hidden costs, and free shipping<br class="d-br"> across India.</p>
         </header>
-
-        <div class="filters" role="group" aria-label="Filter products" data-reveal>
-          <button class="filter is-active" data-filter="all" aria-pressed="true">All <span data-count-cat="all"></span></button>
-          <button class="filter" data-filter="dashcam" aria-pressed="false">Dashcams <span data-count-cat="dashcam"></span></button>
-          <button class="filter" data-filter="adaptor" aria-pressed="false">Wireless adaptors <span data-count-cat="adaptor"></span></button>
-        </div>
 
         <div class="product-grid" data-product-grid>
           <noscript><p>Please enable JavaScript to see bulk prices, or <a href="https://wa.me/919096960651">message us on WhatsApp</a>.</p></noscript>
@@ -399,67 +204,40 @@
       </div>
     </section>
 
-    <!-- ===================== 5 · INCLUDES ===================== -->
-    <section class="section includes" id="includes" aria-labelledby="inc-title">
-      <div class="container">
-        <header class="section-head" data-reveal>
-          <p class="eyebrow"><span class="dot"></span>Every bulk order includes</p>
-          <h2 class="h2" id="inc-title">More than a gift.<br> A complete gifting service.</h2>
-        </header>
-
-        <ul class="inc-grid">
-          <li class="inc" data-reveal><span class="inc__icon"><svg class="i"><use href="#i-truck"/></svg></span><h3>Free pan-India shipping</h3><p>Delivered anywhere in India, on us.</p></li>
-          <li class="inc" data-reveal><span class="inc__icon"><svg class="i"><use href="#i-receipt"/></svg></span><h3>GST invoice</h3><p>Claim your input credit. Just share your GSTIN.</p></li>
-          <li class="inc" data-reveal><span class="inc__icon"><svg class="i"><use href="#i-card"/></svg></span><h3>Personal message card</h3><p>Your custom message printed and placed inside every box.</p></li>
-          <li class="inc" data-reveal><span class="inc__icon"><svg class="i"><use href="#i-gift"/></svg></span><h3>Diwali gift box</h3><p>Festive gift packaging add-on, priced in your quote.</p></li>
-          <li class="inc" data-reveal><span class="inc__icon"><svg class="i"><use href="#i-shield"/></svg></span><h3>1-year warranty</h3><p>Same warranty and support as every retail Nextro.</p></li>
-          <li class="inc inc--hot" data-reveal><span class="inc__icon"><svg class="i"><use href="#i-wrench"/></svg></span><h3>Free installation</h3><p>In Pune &amp; Mumbai, by our partner installers.</p></li>
-          <li class="inc" data-reveal><span class="inc__icon"><svg class="i"><use href="#i-package"/></svg></span><h3>Sample before you commit</h3><p>Try one unit at retail price before ordering in bulk.</p></li>
-          <li class="inc" data-reveal><span class="inc__icon"><svg class="i"><use href="#i-shuffle"/></svg></span><h3>Mix &amp; match</h3><p>Combine dashcams and adaptors in one order.</p></li>
-        </ul>
-
-        <div class="referral" data-referral data-reveal>
-          <svg class="referral__gift gift--night"><use href="#gift"/></svg>
-          <div class="referral__copy">
-            <p class="referral__title">Know someone who manages corporate gifting?</p>
-            <p>Refer them and earn <b>₹500 Nextro credit</b> for every successful bulk order.</p>
-          </div>
-          <a class="btn btn--light" data-wa data-wa-msg="Hi Nextro! I'd like to refer a company for Diwali bulk gifting: " data-track="whatsapp_click" data-loc="referral" href="https://wa.me/919096960651" target="_blank" rel="noopener">
-            <svg class="i i--fill i--wa"><use href="#i-whatsapp"/></svg> Refer on WhatsApp
-          </a>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== 6 · HOW IT WORKS ===================== -->
+    <!-- ===================== 4 · HOW IT WORKS (Figma 27:6060) ===================== -->
     <section class="section how" id="how" aria-labelledby="how-title">
       <div class="container">
-        <div class="sheet">
-          <header class="section-head" data-reveal>
-            <p class="eyebrow"><span class="dot"></span>How it works</p>
-            <h2 class="h2" id="how-title">From inquiry to Diwali delivery in 4 steps.</h2>
+        <div class="sheet how__sheet">
+          <div class="lanterns how__lanterns" aria-hidden="true">
+            <img class="lantern lantern--left" src="assets/svg/figma/lantern-left.svg" alt="" width="100" height="146">
+            <img class="lantern lantern--mid" src="assets/svg/figma/lantern-mid.svg" alt="" width="127" height="222">
+            <img class="lantern lantern--right" src="assets/svg/figma/lantern-right.svg" alt="" width="110" height="172">
+          </div>
+          <header class="how__head" data-reveal>
+            <p class="eyebrow">How it works</p>
+            <h2 class="h2" id="how-title">From inquiry to Diwali<br class="d-br"> delivery in 4 steps.</h2>
           </header>
 
           <div class="steps" data-steps>
             <div class="steps__line" aria-hidden="true"><span class="steps__fill" data-steps-fill></span></div>
             <ol class="steps__list">
               <li class="step">
-                <span class="step__icon"><svg class="i"><use href="#i-msg"/></svg><b>1</b></span>
+                <span class="step__icon"><img src="assets/svg/figma/step-1.svg" alt="" width="28" height="28"><b>1</b></span>
                 <h3>Submit your bulk inquiry</h3>
                 <p>Product, quantity and delivery city. Takes about 60 seconds.</p>
               </li>
               <li class="step">
-                <span class="step__icon"><svg class="i"><use href="#i-file"/></svg><b>2</b></span>
+                <span class="step__icon"><img src="assets/svg/figma/step-2.svg" alt="" width="28" height="28"><b>2</b></span>
                 <h3>Receive your quote within 24 hours</h3>
                 <p>Pricing, packaging options and delivery date. Valid for 7 days.</p>
               </li>
               <li class="step">
-                <span class="step__icon"><svg class="i"><use href="#i-wallet"/></svg><b>3</b></span>
+                <span class="step__icon"><img src="assets/svg/figma/step-3.svg" alt="" width="28" height="28"><b>3</b></span>
                 <h3>Confirm your order and pay</h3>
                 <p>100% prepaid, with a GST invoice for your accounts team.</p>
               </li>
               <li class="step">
-                <span class="step__icon"><svg class="i"><use href="#i-truck"/></svg><b>4</b></span>
+                <span class="step__icon"><img src="assets/svg/figma/step-4.svg" alt="" width="28" height="28"><b>4</b></span>
                 <h3>We dispatch. Delivered before Diwali.</h3>
                 <p>Dispatched in 3–5 business days after payment confirmation.</p>
               </li>
@@ -467,14 +245,15 @@
           </div>
 
           <p class="deadline-pill" data-reveal>
-            <span class="when-before"><span class="diya diya--inline" data-diya></span> Order by <b data-last-label>1 Nov</b> → delivered before Diwali (<span data-diwali-label>8 Nov</span>)</span>
+            <img class="deadline-pill__glow" src="assets/svg/figma/pill-glow.svg" alt="" aria-hidden="true" width="549" height="115">
+            <span class="when-before"><span class="diya diya--inline" data-diya></span> Order by <b data-last-label>1 Nov</b> → delivered before Diwali (&thinsp;<span data-diwali-label>8 Nov</span>&thinsp;)</span>
             <span class="when-after"><span class="diya diya--inline" data-diya></span> Order any time of year: quote in 24 hours, dispatch in 3–5 days</span>
           </p>
         </div>
       </div>
     </section>
 
-    <!-- ===================== 7 · SOCIAL PROOF ===================== -->
+    <!-- ===================== 5 · SOCIAL PROOF ===================== -->
     <section class="section proof" id="proof" aria-labelledby="proof-title">
       <div class="container">
         <header class="section-head section-head--split" data-reveal>
@@ -530,34 +309,13 @@
       <!-- Customer photos: add <img> tiles here when real photos are available -->
     </section>
 
-    <!-- ===================== 8 · INQUIRY FORM ===================== -->
+    <!-- ===================== 6 · INQUIRY FORM ===================== -->
     <section class="section quote" id="quote" aria-labelledby="quote-title">
-      <div class="container quote__grid">
-        <aside class="quote__aside" data-reveal>
-          <p class="eyebrow"><span class="dot"></span>Get your bulk quote</p>
-          <h2 class="h2" id="quote-title">Tell us what you need. We'll reply within 24&nbsp;hours.</h2>
-          <ul class="assure">
-            <li><svg class="i"><use href="#i-clock"/></svg>Quote within 24 hours, valid for 7 days</li>
-            <li><svg class="i"><use href="#i-receipt"/></svg>100% prepaid, with GST invoice</li>
-            <li><svg class="i"><use href="#i-package"/></svg>Sample unit available before you commit</li>
-            <li><svg class="i"><use href="#i-truck"/></svg>Free shipping anywhere in India</li>
-          </ul>
-          <div class="talk">
-            <p class="talk__title">Prefer to talk?</p>
-            <a class="talk__row" data-wa data-track="whatsapp_click" data-loc="form-aside" href="https://wa.me/919096960651" target="_blank" rel="noopener">
-              <span class="talk__icon talk__icon--wa"><svg class="i i--fill"><use href="#i-whatsapp"/></svg></span>
-              <span><b>WhatsApp us</b><small>Fastest reply</small></span>
-            </a>
-            <a class="talk__row" data-tel data-track="call_click" data-loc="form-aside" href="tel:+919096960651">
-              <span class="talk__icon"><svg class="i"><use href="#i-phone"/></svg></span>
-              <span><b data-phone-display>+91 90969 60651</b><small data-hours>Mon–Fri, 9am–5pm</small></span>
-            </a>
-            <a class="talk__row" data-mail data-track="email_click" data-loc="form-aside" href="mailto:bulk@getnextro.com">
-              <span class="talk__icon"><svg class="i"><use href="#i-mail"/></svg></span>
-              <span><b data-email-display>bulk@getnextro.com</b><small>For detailed requirements</small></span>
-            </a>
-          </div>
-        </aside>
+      <div class="container quote__inner">
+        <header class="section-head quote__head" data-reveal>
+          <p class="eyebrow">Get your bulk quote</p>
+          <h2 class="h2 h2--lg" id="quote-title"><span class="when-before">Quote in 24 hours.<br> Gifts before Diwali.</span><span class="when-after">Get your bulk quote<br> in 24 hours.</span></h2>
+        </header>
 
         <div class="form-card" data-reveal>
           <div class="form-progress" aria-hidden="true">
@@ -585,6 +343,7 @@
               <div class="field" data-field="products">
                 <span class="field__label" id="lbl-products">Products <i>*</i></span>
                 <div class="choice-grid" role="group" aria-labelledby="lbl-products" data-product-choices></div>
+                <label class="notsure"><input type="checkbox" name="products" value="Not sure — help me choose"><span>Not sure which? Help me choose</span></label>
                 <p class="field__error" id="err-products"></p>
               </div>
 
@@ -611,8 +370,8 @@
               </div>
 
               <div class="qstep__nav">
-                <span></span>
-                <button type="button" class="btn btn--primary" data-next>Continue <svg class="i"><use href="#i-arrow"/></svg></button>
+                <button type="button" class="btn btn--back" disabled aria-disabled="true"><img src="assets/svg/figma/arrow-back.svg" alt="" width="18" height="18"> Back</button>
+                <button type="button" class="btn btn--primary" data-next>Continue <img src="assets/svg/figma/arrow-continue.svg" alt="" width="18" height="18"></button>
               </div>
             </fieldset>
 
@@ -645,8 +404,8 @@
                 </div>
               </div>
               <div class="qstep__nav">
-                <button type="button" class="btn btn--text" data-back><svg class="i"><use href="#i-arrow-left"/></svg> Back</button>
-                <button type="button" class="btn btn--primary" data-next>Continue <svg class="i"><use href="#i-arrow"/></svg></button>
+                <button type="button" class="btn btn--back" data-back><img src="assets/svg/figma/arrow-back.svg" alt="" width="18" height="18"> Back</button>
+                <button type="button" class="btn btn--primary" data-next>Continue <img src="assets/svg/figma/arrow-continue.svg" alt="" width="18" height="18"></button>
               </div>
             </fieldset>
 
@@ -684,13 +443,12 @@
                 </div>
               </div>
 
-              <input type="hidden" name="use_case">
               <input type="hidden" name="quote_items">
               <input type="hidden" name="utm_source"><input type="hidden" name="utm_medium"><input type="hidden" name="utm_campaign"><input type="hidden" name="utm_content"><input type="hidden" name="utm_term">
 
               <div class="qstep__nav">
-                <button type="button" class="btn btn--text" data-back><svg class="i"><use href="#i-arrow-left"/></svg> Back</button>
-                <button type="submit" class="btn btn--primary" data-submit>Get my quote <svg class="i"><use href="#i-arrow"/></svg></button>
+                <button type="button" class="btn btn--back" data-back><img src="assets/svg/figma/arrow-back.svg" alt="" width="18" height="18"> Back</button>
+                <button type="submit" class="btn btn--primary" data-submit>Get my quote <img src="assets/svg/figma/arrow-continue.svg" alt="" width="18" height="18"></button>
               </div>
               <p class="form-error" data-form-error hidden></p>
               <p class="qform__fine">We only use your details to prepare your quote. No spam.</p>
@@ -709,61 +467,61 @@
       </div>
     </section>
 
-    <!-- ===================== 9 · FAQ ===================== -->
+    <!-- ===================== 7 · FAQ ===================== -->
     <section class="section faq" id="faq" aria-labelledby="faq-title">
       <div class="container faq__inner">
         <header class="section-head" data-reveal>
-          <p class="eyebrow"><span class="dot"></span>FAQs</p>
-          <h2 class="h2" id="faq-title">Questions buyers ask us.</h2>
+          <h2 class="h2 h2--lg" id="faq-title">Questions buyers ask us.</h2>
         </header>
 
         <div class="accordion" data-accordion>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-1" id="faq-1-btn">What is the minimum order quantity?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-1" id="faq-1-btn">What is the minimum order quantity?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-1" role="region" aria-labelledby="faq-1-btn" hidden><p>5 units for the X700 and X900. 10 units for the X300, X600, N70 and N50.</p></div>
           </div>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-2" id="faq-2-btn">Can I mix products in one order?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-2" id="faq-2-btn">Can I mix products in one order?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-2" role="region" aria-labelledby="faq-2-btn" hidden><p>Yes. Mix dashcams and wireless adaptors freely in one order. Each product's minimum quantity applies.</p></div>
           </div>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-3" id="faq-3-btn">Is custom packaging or logo branding available?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-3" id="faq-3-btn">Is custom packaging or logo branding available?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-3" role="region" aria-labelledby="faq-3-btn" hidden><p>We don't print company logos on boxes this season. You can add a personal message card inside every box, and choose our festive Diwali gift box packaging (priced in your quote).</p></div>
           </div>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-4" id="faq-4-btn">What is the delivery timeline?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-4" id="faq-4-btn">What is the delivery timeline?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-4" role="region" aria-labelledby="faq-4-btn" hidden><p>Orders are dispatched within 3–5 business days of payment and usually arrive within 5–7 business days. <span class="when-before">Place your order by <b data-last-label>1 Nov</b> for guaranteed Diwali delivery.</span></p></div>
           </div>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-5" id="faq-5-btn">Can I get a sample unit before placing a bulk order?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-5" id="faq-5-btn">Can I get a sample unit before placing a bulk order?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-5" role="region" aria-labelledby="faq-5-btn" hidden><p>Yes. You can order one unit at the standard retail price before you commit to a bulk order.</p></div>
           </div>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-6" id="faq-6-btn">Is a GST invoice available? Are prices inclusive of GST?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-6" id="faq-6-btn">Is a GST invoice available? Are prices inclusive of GST?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-6" role="region" aria-labelledby="faq-6-btn" hidden><p>Yes, every bulk order comes with a GST invoice. Just share your GSTIN. Bulk prices shown are per unit, and GST is added on your invoice.</p></div>
           </div>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-7" id="faq-7-btn">Can installation be arranged?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-7" id="faq-7-btn">Can installation be arranged?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-7" role="region" aria-labelledby="faq-7-btn" hidden><p>Yes. Installation is <b>free in Pune and Mumbai</b> through our partner installers. Elsewhere in India, every box has a card to book our installation partner directly (paid service).</p></div>
           </div>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-8" id="faq-8-btn">What are the payment terms?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-8" id="faq-8-btn">What are the payment terms?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-8" role="region" aria-labelledby="faq-8-btn" hidden><p>Bulk orders are 100% prepaid. Cash on delivery isn't available for bulk orders. Your quote is valid for 7 days.</p></div>
           </div>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-9" id="faq-9-btn">What about warranty and returns?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-9" id="faq-9-btn">What about warranty and returns?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-9" role="region" aria-labelledby="faq-9-btn" hidden><p>Every unit carries the same 1-year warranty and support as our retail products. Bulk orders can be exchanged for manufacturing defects; they aren't eligible for returns.</p></div>
           </div>
           <div class="acc" data-reveal>
-            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-10" id="faq-10-btn">We need 100+ units. What changes?<svg class="i"><use href="#i-plus"/></svg></button></h3>
+            <h3><button class="acc__btn" aria-expanded="false" aria-controls="faq-10" id="faq-10-btn">We need 100+ units. What changes?<span class="acc__plus"><img src="assets/svg/figma/faq-plus.svg" alt="" width="18" height="18"></span></button></h3>
             <div class="acc__panel" id="faq-10" role="region" aria-labelledby="faq-10-btn" hidden><p>You get custom pricing and a dedicated account manager. Companies reordering within 12 months also get an extra 2% off.</p></div>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== 10 · FINAL CTA ===================== -->
+    <!-- ===================== 8 · FINAL CTA ===================== -->
     <section class="finale" id="finale" aria-labelledby="finale-title">
+      <img class="rangoli rangoli--finale" src="assets/svg/rangoli-finale.svg" alt="" aria-hidden="true" width="1100" height="1097">
       <div class="lights lights--finale" data-lights="finale" aria-hidden="true"></div>
       <div class="finale__marigolds" aria-hidden="true">
         <span class="marigold-strand" data-marigold="7"></span>
@@ -787,8 +545,8 @@
           <p class="finale__sub">Onboarding kits, work anniversaries, client gifts and fleets. Bulk pricing from 5 units.</p>
         </div>
         <div class="finale__ctas">
-          <a class="btn btn--primary btn--lg" href="#quote" data-track="cta_click" data-loc="finale">Get a Quote <svg class="i"><use href="#i-arrow"/></svg></a>
-          <a class="btn btn--glass btn--lg" data-wa data-track="whatsapp_click" data-loc="finale" href="https://wa.me/919096960651" target="_blank" rel="noopener"><svg class="i i--fill"><use href="#i-whatsapp"/></svg> WhatsApp Us</a>
+          <a class="btn btn--primary btn--lg" href="#quote" data-track="cta_click" data-loc="finale">Get a Quote <img src="assets/svg/figma/cta-arrow.svg" alt="" width="20" height="20"></a>
+          <a class="btn btn--glass btn--lg" data-wa data-track="whatsapp_click" data-loc="finale" href="https://wa.me/919096960651" target="_blank" rel="noopener"><img src="assets/svg/figma/cta-whatsapp.svg" alt="" width="20" height="20"> WhatsApp Us</a>
         </div>
         <div class="finale__diyas" aria-hidden="true">
           <span class="diya" data-diya></span><span class="diya" data-diya></span><span class="diya" data-diya></span><span class="diya" data-diya></span><span class="diya" data-diya></span>
@@ -797,37 +555,39 @@
     </section>
   </main>
 
-  <!-- ===================== 11 · FOOTER ===================== -->
+  <!-- ===================== 9 · FOOTER ===================== -->
   <footer class="footer">
     <div class="container footer__grid">
       <div class="footer__brand">
-        <img src="https://getnextro.com/cdn/shop/files/Frame_763112_1.png?v=1773211376&width=300" alt="Nextro" width="147" height="24" loading="lazy">
+        <img class="footer__logo" src="assets/img/brand/logo-white.png" alt="Nextro" width="135" height="22" loading="lazy">
         <p>India's lifestyle electronics brand. Premium tech for real Indian roads.</p>
         <div class="footer__social">
-          <a href="https://instagram.com/getnextro/" target="_blank" rel="noopener" aria-label="Nextro on Instagram"><svg class="i"><use href="#i-instagram"/></svg></a>
-          <a href="https://www.linkedin.com/company/get-nextro" target="_blank" rel="noopener" aria-label="Nextro on LinkedIn"><svg class="i"><use href="#i-linkedin"/></svg></a>
-          <a href="https://facebook.com/getnextro" target="_blank" rel="noopener" aria-label="Nextro on Facebook"><svg class="i"><use href="#i-facebook"/></svg></a>
+          <a href="https://instagram.com/getnextro/" target="_blank" rel="noopener" aria-label="Nextro on Instagram"><img src="assets/svg/figma/social-instagram.svg" alt="" width="18" height="18"></a>
+          <a href="https://www.linkedin.com/company/get-nextro" target="_blank" rel="noopener" aria-label="Nextro on LinkedIn"><img src="assets/svg/figma/social-linkedin.svg" alt="" width="18" height="18"></a>
+          <a href="https://facebook.com/getnextro" target="_blank" rel="noopener" aria-label="Nextro on Facebook"><img src="assets/svg/figma/social-facebook.svg" alt="" width="18" height="18"></a>
         </div>
       </div>
-      <div>
-        <p class="footer__h">Bulk orders</p>
-        <ul>
-          <li><a data-tel href="tel:+919096960651" data-phone-display>+91 90969 60651</a></li>
-          <li><a data-mail href="mailto:bulk@getnextro.com" data-email-display>bulk@getnextro.com</a></li>
-          <li><a data-wa href="https://wa.me/919096960651" target="_blank" rel="noopener">WhatsApp</a></li>
-        </ul>
-      </div>
-      <div>
-        <p class="footer__h">Visit us</p>
-        <address>Office 318, 3rd Floor, Platinum 9,<br>Pashan–Sus Road, Baner,<br>Pune, Maharashtra 411045</address>
-      </div>
-      <div>
-        <p class="footer__h">Shop</p>
-        <ul>
-          <li><a href="https://getnextro.com/collections/dashcams" target="_blank" rel="noopener">Dashcams</a></li>
-          <li><a href="https://getnextro.com/collections/all-products" target="_blank" rel="noopener">All products</a></li>
-          <li><a href="https://getnextro.com" target="_blank" rel="noopener">getnextro.com</a></li>
-        </ul>
+      <div class="footer__cols">
+        <div>
+          <p class="footer__h">Shop</p>
+          <ul>
+            <li><a href="https://getnextro.com/collections/dashcams" target="_blank" rel="noopener">Dashcams</a></li>
+            <li><a href="https://getnextro.com/collections/all-products" target="_blank" rel="noopener">All products</a></li>
+            <li><a href="https://getnextro.com" target="_blank" rel="noopener">getnextro.com</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__h">Bulk orders</p>
+          <ul>
+            <li><a data-tel href="tel:+919096960651" data-phone-display>+91 90969 60651</a></li>
+            <li><a data-mail href="mailto:bulk@getnextro.com" data-email-display>bulk@getnextro.com</a></li>
+            <li><a data-wa href="https://wa.me/919096960651" target="_blank" rel="noopener">WhatsApp</a></li>
+          </ul>
+        </div>
+        <div>
+          <p class="footer__h">Visit us</p>
+          <address>Office 318, 3rd Floor, Platinum 9,<br>Pashan–Sus Road, Baner,<br>Pune, Maharashtra 411045</address>
+        </div>
       </div>
     </div>
     <div class="container footer__base">
@@ -859,6 +619,7 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
   <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js" defer></script>
   <script src="assets/js/config.js?v=1" defer></script>
+  <script src="assets/js/components.js?v=1" defer></script>
   <script src="assets/js/main.js?v=1" defer></script>
 </body>
 </html>

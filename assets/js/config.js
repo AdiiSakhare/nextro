@@ -34,7 +34,6 @@ window.NEXTRO_CONFIG = {
     showLogos: false,      // "Trusted by teams at" logo strip in the hero
     showCounter: false,    // "X companies trusted Nextro this Diwali" badge
     counterValue: 0,
-    showReferral: true,    // ₹500 referral band
   },
 
   // Company logos for the trust strip (only shown when flags.showLogos = true)
@@ -48,8 +47,8 @@ window.NEXTRO_CONFIG = {
 
   // Product photos live in assets/img/Product Images/ and are shown exactly as provided
   // (1086×1448, 3:4 portrait). The layout adapts to this ratio — the images are never cropped or edited.
-  // Cards are intentionally minimal: they show name, variant, bulk price, MOQ, saving % and the add button.
-  // `tagline`, `specs` and `badge` below are not printed on the cards any more — kept here for easy reuse.
+  // Product cards follow the Figma design: art-directed card, name, 'Starting at' price flower, saving % band.
+  // `tagline`, `specs`, `badge` and `image` (the 3:4 photos) are used by the "who it's for" tabs, not by the cards.
   products: [
     {
       id: 'x300',
@@ -64,6 +63,10 @@ window.NEXTRO_CONFIG = {
       badge: 'Best value',
       image: 'assets/img/Product Images/nextro x300.png',
       url: 'https://getnextro.com/products/nextro-dashcam-x300',
+      // Product card artwork from the Figma design (layers are positioned in main.js → CARD_ART)
+      card: { name: 'Nextro X300', bg: 'assets/img/cards/x300-bg.png' },
+      // Form chip: cut-out thumbnail + label from the Figma form
+      chip: { label: 'Solo Vision', image: 'assets/img/form/x300-thumb.png' },
     },
     {
       id: 'x600',
@@ -78,6 +81,10 @@ window.NEXTRO_CONFIG = {
       badge: '',
       image: 'assets/img/Product Images/nextro x600.png',
       url: 'https://getnextro.com/products/nextro-dashcam-x600',
+      // Product card artwork from the Figma design (layers are positioned in main.js → CARD_ART)
+      card: { name: 'Nextro X600', bg: 'assets/img/cards/x600-bg.png' },
+      // Form chip: cut-out thumbnail + label from the Figma form
+      chip: { label: 'Dual Vision', image: 'assets/img/form/x600-thumb.png' },
     },
     {
       id: 'x700',
@@ -92,6 +99,10 @@ window.NEXTRO_CONFIG = {
       badge: 'Premium pick',
       image: 'assets/img/Product Images/nextro x700.png',
       url: 'https://getnextro.com/products/nextro-dashcam-x700-dualvision-plus',
+      // Product card artwork from the Figma design (layers are positioned in main.js → CARD_ART)
+      card: { name: 'Nextro X700', bg: 'assets/img/cards/x700-bg.png', sub: 'DUALVISION' },
+      // Form chip: cut-out thumbnail + label from the Figma form
+      chip: { label: 'Dual Vision', image: 'assets/img/form/x700-thumb.png' },
     },
     {
       id: 'x900',
@@ -106,6 +117,10 @@ window.NEXTRO_CONFIG = {
       badge: 'Flagship',
       image: 'assets/img/Product Images/nextro x900.png',
       url: 'https://getnextro.com/products/nextro-dashcam-x900-trivision',
+      // Product card artwork from the Figma design (layers are positioned in main.js → CARD_ART)
+      card: { name: 'Nextro X900', bg: 'assets/img/cards/x900-bg.png' },
+      // Form chip: cut-out thumbnail + label from the Figma form
+      chip: { label: 'TriVision', image: 'assets/img/form/x900-thumb.png' },
     },
     {
       id: 'n70',
@@ -120,6 +135,10 @@ window.NEXTRO_CONFIG = {
       badge: 'Tech gift',
       image: 'assets/img/Product Images/nextro n70.png',
       url: 'https://getnextro.com/products/nextro-n70-2-in-1-wireless-adapter-for-carplay-android-auto-glass',
+      // Product card artwork from the Figma design (layers are positioned in main.js → CARD_ART)
+      card: { name: 'Nextro N70', bg: 'assets/img/cards/n70-bg.png', showMin: false }, // Figma shows no “MIN … Units” on this card
+      // Form chip: cut-out thumbnail + label from the Figma form
+      chip: { label: 'Wireless Adaptor', image: 'assets/img/form/n70-thumb.png' },
     },
     {
       id: 'n50',
@@ -134,6 +153,10 @@ window.NEXTRO_CONFIG = {
       badge: '',
       image: 'assets/img/Product Images/nextro n50.png',
       url: 'https://getnextro.com/products/nextro-n50-2-in-1-wireless-adapter-for-carplay-android-auto-plastic',
+      // Product card artwork from the Figma design (layers are positioned in main.js → CARD_ART)
+      card: { name: 'Nextro N50', bg: 'assets/img/cards/n50-bg.png', showMin: false }, // Figma shows no “MIN … Units” on this card
+      // Form chip: cut-out thumbnail + label from the Figma form
+      chip: { label: 'Wireless Adaptor', image: 'assets/img/form/n50-thumb.png' },
     },
   ],
 

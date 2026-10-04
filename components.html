@@ -1,0 +1,325 @@
+<!doctype html>
+<html lang="en-IN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nextro Component Library</title>
+<meta name="robots" content="noindex">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/css/base.css">
+<link rel="stylesheet" href="assets/css/components.css">
+<style>
+  /* catalogue shell only — nothing here is part of the components */
+  body { font-size: 1rem; }
+  .wrap { max-width: 1180px; margin: 0 auto; padding: 0 24px 96px; }
+  .top { padding: 56px 0 32px; }
+  .top h1 { font-size: clamp(2rem, 1.4rem + 2vw, 3rem); letter-spacing: -.04em; line-height: 1.08; color: var(--head); }
+  .top p { margin-top: 14px; max-width: 70ch; color: var(--ink-2); }
+  .nav { position: sticky; top: 0; z-index: 30; display: flex; gap: 6px; flex-wrap: wrap; padding: 12px 0; margin-bottom: 8px; background: var(--cream); border-bottom: 1px solid var(--line); }
+  .nav a { padding: 7px 14px; border-radius: 999px; text-decoration: none; font-weight: 600; font-size: .9rem; color: var(--ink-2); }
+  .nav a:hover { background: var(--cream-2); color: var(--ink); }
+  .how { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin: 8px 0 8px; }
+  .how > div { padding: 18px 20px; border-radius: 20px; background: #fff; border: 1px solid var(--line); }
+  .how b { display: block; margin-bottom: 4px; }
+  .how p { margin: 0; font-size: .92rem; color: var(--ink-2); }
+  .comp { padding: 56px 0 8px; border-top: 1px solid var(--line); margin-top: 40px; scroll-margin-top: 64px; }
+  .kicker { font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--diya-ink); }
+  .comp h2 { font-size: 2rem; letter-spacing: -.035em; color: var(--head); margin: 6px 0 8px; }
+  .blurb { max-width: 70ch; color: var(--ink-2); margin-bottom: 20px; }
+  .demo { padding: 32px; border-radius: 28px; background: #fff; border: 1px solid var(--line); box-shadow: var(--shadow); }
+  .row { display: flex; flex-wrap: wrap; gap: 14px; align-items: center; }
+  .row + .row { margin-top: 22px; }
+  .row--center { justify-content: space-around; }
+  .row--top { align-items: flex-start; }
+  .on-night { padding: 24px; border-radius: 20px; background: var(--night); }
+  .cell { display: grid; justify-items: center; gap: 10px; }
+  .cell small, .stage p { font-size: .8rem; color: var(--ink-3); }
+  .stage { position: relative; margin: 0 0 18px; padding: 150px 20px 16px; border-radius: 20px; text-align: center; overflow: hidden; }
+  .stage:last-child { margin-bottom: 0; }
+  .stage--cream { background: var(--cream); }
+  .stage--night { background: var(--night); }
+  .stage--night p { color: rgba(255,255,255,.6); }
+  .stage--white { background: #fff; border: 1px solid var(--line); }
+  .stage--lanterns { padding: 250px 20px 16px; }
+  .stage--lanterns .lanterns { position: absolute; top: 0; left: 50%; margin-left: -130px; }
+  .lights--demo { top: 0; height: 110px; }
+  .dock-ctl { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 22px; }
+  .dock-stage { padding: 36px 20px; border-radius: 20px; background: var(--cream-2); display: grid; place-items: center; }
+  .dock-stage .dock { position: relative; left: auto; bottom: auto; transform: none; pointer-events: auto; transition: opacity .4s, transform .6s var(--ease); width: min(680px, 100%); }
+  .dock-stage .dock:not(.is-visible) { opacity: 0; transform: translateY(40px); }
+  .cols { display: grid; grid-template-columns: 1.1fr 1fr; gap: 28px; margin-top: 28px; align-items: start; }
+  .cols > div { min-width: 0; }
+  .cols h3 { font-size: .8rem; letter-spacing: .12em; text-transform: uppercase; color: var(--ink-3); margin: 0 0 10px; }
+  .cols > div > * + h3 { margin-top: 24px; }
+  .code { margin: 0; padding: 18px 20px; border-radius: 16px; background: #1B1035; color: #FFE9B8; font: 500 .8rem/1.65 ui-monospace, SFMono-Regular, Menlo, monospace; overflow-x: auto; white-space: pre; tab-size: 2; }
+  .tbl { width: 100%; border-collapse: collapse; font-size: .88rem; }
+  .tbl th { text-align: left; padding: 8px 10px; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--ink-3); border-bottom: 1px solid var(--line-2); }
+  .tbl td { padding: 9px 10px; vertical-align: top; border-bottom: 1px solid var(--line); color: var(--ink-2); }
+  .tbl td:first-child { width: 38%; color: var(--ink); font-weight: 600; }
+  .tbl code, .notes code, .blurb code { padding: 1px 6px; border-radius: 6px; background: var(--cream-2); font: 600 .82em ui-monospace, Menlo, monospace; color: var(--diya-ink); }
+  .notes { padding-left: 18px; list-style: disc; display: grid; gap: 8px; font-size: .9rem; color: var(--ink-2); }
+  @media (max-width: 900px) { .cols, .how { grid-template-columns: 1fr; } .wrap { padding: 0 16px 72px; } .demo { padding: 20px; } }
+</style>
+</head>
+<body>
+<svg class="sprite" aria-hidden="true" focusable="false" xmlns="http://www.w3.org/2000/svg">
+    <symbol id="i-arrow" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 24 24"><path d="M5 12h14M12 5v14"/></symbol>
+    <symbol id="i-minus" viewBox="0 0 24 24"><path d="M5 12h14"/></symbol>
+    <symbol id="i-whatsapp" viewBox="0 0 24 24">
+      <path fill="currentColor" stroke="none" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5.05-1.32A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.18-1.15l-.3-.18-3 .79.8-2.92-.2-.3A8.2 8.2 0 1 1 12 20.2Z"/>
+      <path fill="currentColor" stroke="none" d="M16.5 14.13c-.25-.12-1.47-.72-1.7-.8-.23-.09-.4-.13-.56.12-.17.25-.64.8-.79.97-.14.17-.29.19-.54.06a6.73 6.73 0 0 1-3.32-2.9c-.25-.43.25-.4.72-1.33.08-.17.04-.31-.02-.43l-.76-1.83c-.2-.48-.4-.41-.56-.42h-.48a.92.92 0 0 0-.66.31 2.78 2.78 0 0 0-.87 2.07 4.83 4.83 0 0 0 1.01 2.57 11.03 11.03 0 0 0 4.23 3.74c1.57.68 2.19.74 2.98.62.48-.07 1.47-.6 1.68-1.18.2-.58.2-1.08.14-1.18-.06-.1-.23-.17-.48-.29Z"/>
+    </symbol>
+</svg>
+
+<div class="wrap">
+  <header class="top">
+    <p class="kicker">Developer handoff</p>
+    <h1>Nextro component library</h1>
+    <p>The six festive pieces that are hardest to rebuild from a screenshot — buttons, diya, LED fairy lights, hanging marigolds, hanging lanterns and the sticky bottom bar — as stand-alone, copy-pasteable components. Everything on this page is live and is the <strong>same code the website runs</strong>, so it can’t drift out of date. Look, copy the markup, adjust the options.</p>
+  </header>
+
+  <div class="how">
+    <div><b>1 · Files</b><p><code>assets/css/base.css</code> (tokens + reset) → <code>components.css</code> → your page CSS. Optional: <code>assets/js/components.js</code> for the animated pieces.</p></div>
+    <div><b>2 · Motion needs GSAP</b><p>Diya, lights and marigolds animate with GSAP 3 (<code>ScrollTrigger</code> only for light-up on scroll). No GSAP, or “reduce motion” on? Everything still renders, just still.</p></div>
+    <div><b>3 · Any stack</b><p>Plain HTML + CSS + one small script. In React/Vue/Shopify, reuse the CSS as is and call the <code>NextroUI.*</code> functions after mount (or lift the SVG strings out).</p></div>
+  </div>
+
+  <nav class="nav" aria-label="Components">
+    <a href="#buttons">Buttons</a><a href="#diya">Diya</a><a href="#lights">LED lights</a><a href="#marigold">Marigolds</a><a href="#lanterns">Lanterns</a><a href="#dock">Sticky bar</a>
+  </nav>
+
+  <section class="comp" id="buttons">
+    <header class="comp__head"><p class="kicker">CSS only · used everywhere</p><h2>Buttons</h2><p class="blurb">The call-to-action family: six styles, three sizes, icon and round buttons, plus disabled and loading states.</p></header>
+    <div class="demo ">
+<div class="row">
+  <a class="btn btn--primary" href="#">Get a Quote <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a class="btn btn--light" href="#">Light</a>
+  <a class="btn btn--ghost" href="#">Ghost</a>
+  <a class="btn btn--dark" href="#">Dark <svg class="i"><use href="#i-arrow"/></svg></a>
+  <a class="btn btn--wa" href="#"><svg class="i i--fill"><use href="#i-whatsapp"/></svg> WhatsApp</a>
+  <a class="btn btn--text" href="#">Text button</a>
+</div>
+<div class="row">
+  <a class="btn btn--primary btn--sm" href="#">Small</a>
+  <a class="btn btn--primary" href="#">Default</a>
+  <a class="btn btn--primary btn--lg" href="#">Large</a>
+  <button class="btn btn--primary" disabled>Disabled</button>
+  <button class="btn btn--light" disabled><span class="spinner"></span> Sending…</button>
+  <a class="icon-btn icon-btn--wa" href="#" aria-label="WhatsApp"><svg class="i i--fill"><use href="#i-whatsapp"/></svg></a>
+  <button class="round-btn" aria-label="Next"><svg class="i"><use href="#i-arrow"/></svg></button>
+</div>
+<div class="row on-night"><a class="btn btn--glass" href="#">Glass (on dark) <svg class="i"><use href="#i-arrow"/></svg></a></div></div>
+    <div class="cols">
+      <div><h3>Markup</h3><pre class="code"><code>&lt;a class=&quot;btn btn--primary&quot; href=&quot;#quote&quot;&gt;Get a Quote &lt;svg class=&quot;i&quot;&gt;&lt;use href=&quot;#i-arrow&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;
+
+&lt;a class=&quot;btn btn--light btn--sm&quot; href=&quot;#&quot;&gt;Small light&lt;/a&gt;
+&lt;button class=&quot;btn btn--primary&quot; disabled&gt;Disabled&lt;/button&gt;
+&lt;button class=&quot;btn btn--light&quot; disabled&gt;&lt;span class=&quot;spinner&quot;&gt;&lt;/span&gt; Sending…&lt;/button&gt;
+
+&lt;a class=&quot;icon-btn icon-btn--wa&quot; href=&quot;#&quot; aria-label=&quot;WhatsApp&quot;&gt;&lt;svg class=&quot;i i--fill&quot;&gt;&lt;use href=&quot;#i-whatsapp&quot;/&gt;&lt;/svg&gt;&lt;/a&gt;
+&lt;button class=&quot;round-btn&quot; aria-label=&quot;Next&quot;&gt;&lt;svg class=&quot;i&quot;&gt;&lt;use href=&quot;#i-arrow&quot;/&gt;&lt;/svg&gt;&lt;/button&gt;</code></pre></div>
+      <div>
+        <h3>Options</h3><table class="tbl"><thead><tr><th>Name</th><th>What it does</th></tr></thead><tbody><tr><td><code>btn--primary</code></td><td>Saffron→orange gradient, inner highlight, soft orange shadow. A light shine sweeps across on hover. The main call to action.</td></tr><tr><td><code>btn--light / --ghost / --dark / --glass / --wa / --text</code></td><td>Secondary styles. --glass is for dark backgrounds only.</td></tr><tr><td><code>btn--sm / --lg</code></td><td>40px and 56px tall. Default is 48px.</td></tr><tr><td><code>[disabled]</code></td><td>70% opacity, no pointer events.</td></tr><tr><td><code>.spinner</code></td><td>Put inside a button while sending. 18px ring, 0.8s linear spin.</td></tr><tr><td><code>icon-btn(--wa) / round-btn</code></td><td>Circular 42px (WhatsApp tint) and 48px (outlined, carousel arrows).</td></tr><tr><td><code>.i / .i--fill</code></td><td>Icon helper: 1.25em, 2px round stroke, takes the text colour. --fill for solid icons.</td></tr></tbody></table>
+        <h3>Motion</h3><table class="tbl"><thead><tr><th>What</th><th>Spec</th></tr></thead><tbody><tr><td>Hover</td><td>Lifts 2px (0.3s, ease cubic-bezier(.2,.8,.2,1)); trailing arrow slides 3px right</td></tr><tr><td>Press</td><td>Scales to 98%</td></tr><tr><td>Primary shine</td><td>White diagonal band travels left→right in 0.8s on hover</td></tr></tbody></table>
+        <h3>Good to know</h3><ul class="notes"><li>Pure CSS, no JavaScript.</li><li>Text colour/background come from the tokens in <code>base.css</code> (<code>--ink</code>, <code>--night</code>, <code>--wa</code>…). Change the token and every button follows.</li><li>Always use real <code>&lt;a&gt;</code> for navigation and <code>&lt;button&gt;</code> for actions.</li></ul>
+      </div>
+    </div>
+  </section>
+  <section class="comp" id="diya">
+    <header class="comp__head"><p class="kicker">SVG + optional GSAP motion</p><h2>Diya</h2><p class="blurb">A clay lamp with a flickering flame, drawn as one inline SVG. Used in the deadline pill, the sticky bar, the success message and the closing row.</p></header>
+    <div class="demo ">
+<div class="row row--center">
+  <div class="cell"><span class="diya" data-diya style="width:120px"></span><small>default width 56px — here 120px</small></div>
+  <div class="cell"><span class="diya" data-diya></span><small>56px</small></div>
+  <div class="cell"><span class="diya diya--dock" data-diya></span><small>--dock 34px</small></div>
+  <div class="cell"><span class="diya diya--inline" data-diya></span><small>--inline 26px</small></div>
+  <div class="cell"><span class="diya diya--success" data-diya></span><small>--success 92px</small></div>
+</div></div>
+    <div class="cols">
+      <div><h3>Markup</h3><pre class="code"><code>&lt;span class=&quot;diya&quot; data-diya&gt;&lt;/span&gt;                 &lt;!-- 56px --&gt;
+&lt;span class=&quot;diya diya--inline&quot; data-diya&gt;&lt;/span&gt;     &lt;!-- 26px, sits in a line of text --&gt;
+&lt;span class=&quot;diya&quot; data-diya style=&quot;width:120px&quot;&gt;&lt;/span&gt;  &lt;!-- any width: the height follows (aspect-ratio 120:110) --&gt;
+
+&lt;script src=&quot;assets/js/components.js&quot;&gt;&lt;/script&gt;
+&lt;script&gt;
+  NextroUI.diya.render();    // draws the lamp into every [data-diya]
+  NextroUI.diya.animate();   // optional: flame flicker + glow pulse (needs GSAP)
+&lt;/script&gt;</code></pre></div>
+      <div>
+        <h3>Options</h3><table class="tbl"><thead><tr><th>Name</th><th>What it does</th></tr></thead><tbody><tr><td><code>data-diya</code></td><td>Marks an empty element; <code>NextroUI.diya.render()</code> fills it with the SVG lamp.</td></tr><tr><td><code>width</code></td><td>Set any width on the element. Modifiers: <code>diya--inline</code> 26px · <code>diya--dock</code> 34px · <code>diya--success</code> 92px.</td></tr><tr><td><code>NextroUI.diya.svg</code></td><td>The raw SVG string, if you would rather paste it into a template or a React component.</td></tr><tr><td><code>NextroUI.diya.animate(root?)</code></td><td>Starts the flame and glow motion for every diya inside <code>root</code> (default: whole page).</td></tr></tbody></table>
+        <h3>Motion</h3><table class="tbl"><thead><tr><th>What</th><th>Spec</th></tr></thead><tbody><tr><td>Flame</td><td>Every 0.12–0.30s picks a random scaleY 0.86–1.14, scaleX 0.90–1.06 and rotation ±5°, from the base of the flame (sine in-out). It never repeats.</td></tr><tr><td>Glow</td><td>Halo opacity pulses to 0.6 and back over 0.9s (yoyo, infinite), each diya starting at a random offset.</td></tr></tbody></table>
+        <h3>Good to know</h3><ul class="notes"><li>Three layers: halo (<code>.diya__glow</code>), flame (<code>.diya__flame</code>), clay bowl. Only the first two animate.</li><li>Colours are in the SVG and in the shared gradients that <code>NextroUI.defs()</code> injects (<code>#g-flame-glow</code>, <code>#g-flame</code>, <code>#g-diya</code>).</li><li>Decorative: it carries <code>aria-hidden</code>. Without GSAP or with “reduce motion” it stays still.</li></ul>
+      </div>
+    </div>
+  </section>
+  <section class="comp" id="lights">
+    <header class="comp__head"><p class="kicker">JS-generated SVG + GSAP</p><h2>LED fairy lights</h2><p class="blurb">A sagging wire with glowing, twinkling bulbs, generated to fit whatever box you give it. One hangs from the sticky header; another lights up on the closing section.</p></header>
+    <div class="demo ">
+<div class="stage stage--cream"><div class="lights lights--demo" data-lights-demo></div><p>Header variant — wire + glowing bulbs, twinkling</p></div>
+<div class="stage stage--night"><div class="lights lights--finale lights--demo" data-lights-demo></div><p>Finale variant — white wire on a dark section</p></div></div>
+    <div class="cols">
+      <div><h3>Markup</h3><pre class="code"><code>&lt;!-- the parent must be position:relative (or fixed/sticky); the garland fills its width --&gt;
+&lt;section style=&quot;position:relative&quot;&gt;
+  &lt;div class=&quot;lights lights--finale&quot; data-lights=&quot;finale&quot; aria-hidden=&quot;true&quot;&gt;&lt;/div&gt;
+&lt;/section&gt;
+
+&lt;script&gt;
+  NextroUI.lights.mount(document.querySelector(&#x27;[data-lights=&quot;finale&quot;]&#x27;));
+  // switch on bulb-by-bulb when a section scrolls into view (needs ScrollTrigger):
+  // NextroUI.lights.lightUp(el, { trigger: &#x27;#finale&#x27;, start: &#x27;top 70%&#x27; });
+&lt;/script&gt;
+
+&lt;!-- pinned under a sticky header, handing over to the next section&#x27;s garland --&gt;
+&lt;header class=&quot;header&quot;&gt;
+  &lt;div class=&quot;lights lights--header&quot;&gt;&lt;div class=&quot;lights__push&quot; data-lights=&quot;header&quot;&gt;&lt;/div&gt;&lt;/div&gt;
+&lt;/header&gt;
+&lt;script&gt;
+  NextroUI.lights.mount(document.querySelector(&#x27;[data-lights=&quot;header&quot;]&#x27;));
+  NextroUI.lights.stickyHandoff(document.querySelector(&#x27;.lights--header&#x27;), document.querySelector(&#x27;#finale&#x27;));
+&lt;/script&gt;</code></pre></div>
+      <div>
+        <h3>Options</h3><table class="tbl"><thead><tr><th>Name</th><th>What it does</th></tr></thead><tbody><tr><td><code>data-lights</code></td><td>Hook only. Any empty box works; its size decides the drawing.</td></tr><tr><td><code>lights--header</code></td><td>Hangs from the bottom of a sticky header (<code>top:100%</code>, 84px, clipped).</td></tr><tr><td><code>lights--finale</code></td><td>White wire for dark backgrounds.</td></tr><tr><td><code>mount(el, {twinkle})</code></td><td>Draws the garland, starts twinkling (<code>twinkle:false</code> to skip), redraws when the viewport width changes by 40px+.</td></tr><tr><td><code>lightUp(el, {trigger, start})</code></td><td>Dims the bulbs, then lights them one by one when <code>trigger</code> reaches <code>start</code>.</td></tr><tr><td><code>stickyHandoff(frame, nextEl)</code></td><td>Slides the pinned garland up under the header when <code>nextEl</code> arrives, so two strings are never visible.</td></tr></tbody></table>
+        <h3>Motion</h3><table class="tbl"><thead><tr><th>What</th><th>Spec</th></tr></thead><tbody><tr><td>Twinkle</td><td>Each bulb’s glow breathes between 25% and 60% opacity over 0.6–1.6s (yoyo, infinite), random start delay 0–1.5s</td></tr><tr><td>Light-up</td><td>Bulbs fade in 0.25s, 0.06s apart; glows fade in 0.4s; then twinkling starts</td></tr><tr><td>Hand-off</td><td>Linked to scroll position, no easing — it moves exactly with the page</td></tr></tbody></table>
+        <h3>Good to know</h3><ul class="notes"><li><strong>Reuse the generator rather than redrawing it.</strong> The wire is a quadratic curve in 2–4 swags (2 below 640px, 3 below 1100px, 4 above); a bulb is placed every 60px (44px on phones) <em>along the curve</em> using <code>getPointAtLength</code>, tilted −8°/0°/+8°.</li><li>Bulb colours repeat: gold, orange, pink, warm white; each has a radial glow (<code>#g-bulb-a…d</code>).</li><li>Sag is 42% of the box height (34% on phones). Change the box height to change the drape.</li></ul>
+      </div>
+    </div>
+  </section>
+  <section class="comp" id="marigold">
+    <header class="comp__head"><p class="kicker">JS-generated SVG + GSAP</p><h2>Hanging marigolds</h2><p class="blurb">Strands of marigold flowers that sway gently. Four hang from the top of the closing section.</p></header>
+    <div class="demo ">
+<div class="row row--center row--top">
+  <div class="cell"><span class="marigold-strand" data-marigold="3"></span><small>3</small></div>
+  <div class="cell"><span class="marigold-strand" data-marigold="5"></span><small>5</small></div>
+  <div class="cell"><span class="marigold-strand" data-marigold="7"></span><small>7</small></div>
+  <div class="cell"><span class="marigold-strand" data-marigold="9"></span><small>9</small></div>
+</div></div>
+    <div class="cols">
+      <div><h3>Markup</h3><pre class="code"><code>&lt;span class=&quot;marigold-strand&quot; data-marigold=&quot;7&quot;&gt;&lt;/span&gt;   &lt;!-- 7 flowers --&gt;
+
+&lt;script&gt;
+  NextroUI.marigold.render();    // draws every [data-marigold] strand
+  NextroUI.marigold.animate();   // optional sway (needs GSAP)
+&lt;/script&gt;
+
+/* place it however you like — the site hangs four of them from the top edge: */
+.finale__marigolds .marigold-strand { position: absolute; top: 0; }</code></pre></div>
+      <div>
+        <h3>Options</h3><table class="tbl"><thead><tr><th>Name</th><th>What it does</th></tr></thead><tbody><tr><td><code>data-marigold=&quot;n&quot;</code></td><td>Number of flowers (default 5). The strand grows 24px per flower.</td></tr><tr><td><code>position</code></td><td>The component has no position of its own. Hang it with <code>position:absolute; top:0</code> inside a relative box.</td></tr></tbody></table>
+        <h3>Motion</h3><table class="tbl"><thead><tr><th>What</th><th>Spec</th></tr></thead><tbody><tr><td>Sway</td><td>Rotates ±3° around the top of the strand (transform-origin 50% 0). Direction alternates per strand; duration 2.4s + 0.3s × strand index; yoyo, sine in-out, infinite.</td></tr></tbody></table>
+        <h3>Good to know</h3><ul class="notes"><li>A flower is three circles (outer petals, inner petals, centre) in alternating orange/amber tones, threaded on a thin gold string with a two-leaf tip.</li><li>Size: 28px wide; height = 30 + 24 × n px.</li></ul>
+      </div>
+    </div>
+  </section>
+  <section class="comp" id="lanterns">
+    <header class="comp__head"><p class="kicker">CSS only</p><h2>Hanging lanterns</h2><p class="blurb">Three sky lanterns on strings, swinging slowly in the air. Used in the How it works card.</p></header>
+    <div class="demo ">
+<div class="stage stage--white stage--lanterns">
+  <div class="lanterns">
+    <img class="lantern lantern--left" src="assets/svg/figma/lantern-left.svg" alt="" width="100" height="146">
+    <img class="lantern lantern--mid" src="assets/svg/figma/lantern-mid.svg" alt="" width="127" height="222">
+    <img class="lantern lantern--right" src="assets/svg/figma/lantern-right.svg" alt="" width="110" height="172">
+  </div>
+  <p>Strings meet the top edge; each lantern swings from there</p>
+</div></div>
+    <div class="cols">
+      <div><h3>Markup</h3><pre class="code"><code>&lt;!-- put it where the strings should meet the top edge --&gt;
+&lt;div class=&quot;lanterns&quot; aria-hidden=&quot;true&quot; style=&quot;position:absolute; top:0; right:184px&quot;&gt;
+  &lt;img class=&quot;lantern lantern--left&quot;  src=&quot;assets/svg/figma/lantern-left.svg&quot;  alt=&quot;&quot; width=&quot;100&quot; height=&quot;146&quot;&gt;
+  &lt;img class=&quot;lantern lantern--mid&quot;   src=&quot;assets/svg/figma/lantern-mid.svg&quot;   alt=&quot;&quot; width=&quot;127&quot; height=&quot;222&quot;&gt;
+  &lt;img class=&quot;lantern lantern--right&quot; src=&quot;assets/svg/figma/lantern-right.svg&quot; alt=&quot;&quot; width=&quot;110&quot; height=&quot;172&quot;&gt;
+&lt;/div&gt;
+
+/* the three tuning knobs, per lantern */
+.lantern--left { left: -18px; --px: 49.95px; --a: 3.2deg; --t: 5.6s; --d: -1.4s; }</code></pre></div>
+      <div>
+        <h3>Options</h3><table class="tbl"><thead><tr><th>Name</th><th>What it does</th></tr></thead><tbody><tr><td><code>--a</code></td><td>Swing angle each side of vertical (left 3.2°, mid 2.2°, right 2.8°).</td></tr><tr><td><code>--t</code></td><td>Seconds for one swing one way (5.6s / 6.8s / 6.1s). A full back-and-forth is twice that.</td></tr><tr><td><code>--d</code></td><td>Negative start delay so the lanterns are already out of step at page load.</td></tr><tr><td><code>--px</code></td><td>Pivot, in px from the image’s left edge: where the string meets the top edge.</td></tr><tr><td><code>.lanterns</code></td><td>A 261×216 box. Position it; the three images are placed inside it.</td></tr></tbody></table>
+        <h3>Motion</h3><table class="tbl"><thead><tr><th>What</th><th>Spec</th></tr></thead><tbody><tr><td>Swing</td><td>CSS keyframes <code>lantern-swing</code>: rotate(−a) ⇄ rotate(+a), alternate, infinite, easing cubic-bezier(.45,.05,.55,.95) (a sine-like ease)</td></tr><tr><td>Pivot</td><td>transform-origin = (--px, 0), the top of the string</td></tr></tbody></table>
+        <h3>Good to know</h3><ul class="notes"><li>CSS only — no JavaScript, no GSAP. Animates <code>transform</code> only, so it stays on the GPU.</li><li>Each lantern is a separate SVG (<code>assets/svg/figma/lantern-*.svg</code>), padded at the sides so the swing is never clipped.</li><li>Hidden below 1100px on the site (no room next to the heading); stopped when the visitor prefers reduced motion.</li></ul>
+      </div>
+    </div>
+  </section>
+  <section class="comp" id="dock">
+    <header class="comp__head"><p class="kicker">CSS + small JS</p><h2>Sticky bottom bar</h2><p class="blurb">The floating bar that follows the visitor: it shows the order deadline, and turns into a live quote tray once they add products.</p></header>
+    <div class="demo ">
+<div class="dock-ctl"><button class="btn btn--light btn--sm" data-dock-toggle="tray">Show quote-tray state</button> <button class="btn btn--light btn--sm" data-dock-toggle="hide">Slide away / back</button></div>
+<div class="dock-stage">
+  <div class="dock is-visible" data-dock-demo aria-live="polite">
+    <div class="dock__inner">
+      <div class="dock__info dock__info--deadline">
+        <span class="diya diya--dock" data-diya></span>
+        <p><b><span class="hide-sm">Diwali bulk orders close</span><span class="show-sm">Orders close</span> 1 Nov</b><span>28 days left</span></p>
+      </div>
+      <div class="dock__info dock__info--tray">
+        <span class="dock__count">20</span>
+        <p><b>2 products<span class="hide-sm"> in your quote</span></b><span>Est. ₹57,000 + GST</span></p>
+      </div>
+      <div class="dock__actions">
+        <a class="icon-btn icon-btn--wa icon-btn--dock" href="#" aria-label="Chat on WhatsApp"><svg class="i i--fill"><use href="#i-whatsapp"/></svg></a>
+        <a class="btn btn--primary" href="#"><span>Get a Quote</span> <svg class="i"><use href="#i-arrow"/></svg></a>
+      </div>
+    </div>
+  </div>
+</div></div>
+    <div class="cols">
+      <div><h3>Markup</h3><pre class="code"><code>&lt;div class=&quot;dock&quot; data-dock aria-live=&quot;polite&quot;&gt;
+  &lt;div class=&quot;dock__inner&quot;&gt;
+
+    &lt;!-- state A: deadline (shown when the quote is empty) --&gt;
+    &lt;div class=&quot;dock__info dock__info--deadline&quot;&gt;
+      &lt;span class=&quot;diya diya--dock&quot; data-diya&gt;&lt;/span&gt;
+      &lt;p&gt;&lt;b&gt;Diwali bulk orders close 1 Nov&lt;/b&gt;&lt;span&gt;28 days left&lt;/span&gt;&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;!-- state B: quote tray (shown once .has-items is on the dock) --&gt;
+    &lt;div class=&quot;dock__info dock__info--tray&quot;&gt;
+      &lt;span class=&quot;dock__count&quot;&gt;20&lt;/span&gt;
+      &lt;p&gt;&lt;b&gt;2 products in your quote&lt;/b&gt;&lt;span&gt;Est. ₹57,000 + GST&lt;/span&gt;&lt;/p&gt;
+    &lt;/div&gt;
+
+    &lt;div class=&quot;dock__actions&quot;&gt;
+      &lt;a class=&quot;icon-btn icon-btn--wa icon-btn--dock&quot; href=&quot;https://wa.me/…&quot; aria-label=&quot;Chat on WhatsApp&quot;&gt;…&lt;/a&gt;
+      &lt;a class=&quot;btn btn--primary&quot; href=&quot;#quote&quot;&gt;Get a Quote …&lt;/a&gt;
+    &lt;/div&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+&lt;script&gt;
+  const dock = NextroUI.dock.mount(document.querySelector(&#x27;[data-dock]&#x27;), {
+    after: &#x27;.hero&#x27;,                                  // appears once this has scrolled out of view
+    hideOn: [&#x27;#quote&#x27;, &#x27;#finale&#x27;, &#x27;.footer&#x27;],        // slides away while any of these is on screen
+  });
+  dock.setHasItems(true);    // swap the deadline copy for the quote tray
+&lt;/script&gt;</code></pre></div>
+      <div>
+        <h3>Options</h3><table class="tbl"><thead><tr><th>Name</th><th>What it does</th></tr></thead><tbody><tr><td><code>.is-visible</code></td><td>Slid into view. Without it the bar is parked below the screen edge and not clickable.</td></tr><tr><td><code>.has-items</code></td><td>Shows the quote-tray content instead of the deadline content. It also forces the bar to appear even over the hero.</td></tr><tr><td><code>mount(el, {after, hideOn, rootMargin})</code></td><td>Wires the show/hide rules with an IntersectionObserver (<code>rootMargin</code> default <code>0 0 −15% 0</code>). Returns <code>{update, setHasItems(bool)}</code>.</td></tr><tr><td><code>.dock__count</code></td><td>Round marigold counter in the tray state.</td></tr><tr><td><code>violet glow</code></td><td>The violet glow along the top is <code>assets/svg/figma/pill-glow.svg</code>, drawn as the bar’s background image on the night colour.</td></tr></tbody></table>
+        <h3>Motion</h3><table class="tbl"><thead><tr><th>What</th><th>Spec</th></tr></thead><tbody><tr><td>Slide</td><td>translateY 0.6s cubic-bezier(.2,.8,.2,1); it is 100% + 40px below the viewport when hidden</td></tr><tr><td>Counter</td><td>On site, the count pops 1.35→1 with a back-out ease when a product is added, and the estimate counts up over 0.6s (page logic in main.js, not part of the component)</td></tr></tbody></table>
+        <h3>Good to know</h3><ul class="notes"><li>Fixed to the bottom, centred, max 680px wide (screen − 20px on phones); respects the iPhone home-indicator inset.</li><li>Below 480px: the diya and button arrow hide, padding tightens and corners go from pill to 22px.</li><li>The component is only the shell and show/hide logic. Filling the numbers is up to the app — on this site <code>main.js</code> does it from the quote tray.</li></ul>
+      </div>
+    </div>
+  </section>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="assets/js/components.js"></script>
+<script>
+  NextroUI.diya.render();
+  NextroUI.diya.animate();
+  NextroUI.marigold.render();
+  NextroUI.marigold.animate();
+  document.querySelectorAll('[data-lights-demo]').forEach((el) => NextroUI.lights.mount(el));
+
+  // dock demo controls
+  const dock = document.querySelector('[data-dock-demo]');
+  document.querySelectorAll('[data-dock-toggle]').forEach((b) => b.addEventListener('click', () => {
+    if (b.dataset.dockToggle === 'tray') {
+      const on = dock.classList.toggle('has-items');
+      b.textContent = on ? 'Show deadline state' : 'Show quote-tray state';
+    } else dock.classList.toggle('is-visible');
+  }));
+</script>
+</body>
+</html>

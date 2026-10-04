@@ -4,7 +4,7 @@
     {
       "name": "nextro-diwali-mirror",
       "runtimeExecutable": "/bin/sh",
-      "runtimeArgs": ["-c", "cd /tmp && exec python3 -m http.server 5174 --directory /private/tmp/claude-501/-Users-adinathsakhare-Desktop-Nextro-Diwali-Offer/de7b785b-7928-49c7-8de4-8e01feef8c94/scratchpad/site"],
+      "runtimeArgs": ["-c", "cd /tmp && exec python3 -m http.server 5174 --directory /private/tmp/claude-501/-Users-adinathsakhare-Desktop-Nextro-Diwali-Offer/b230a3aa-2159-4c5c-b51a-1e1e2b561386/scratchpad/site"],
       "port": 5174
     }
   ]

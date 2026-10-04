@@ -1,7 +1,8 @@
 /* ==========================================================================
    NEXTRO · DIWALI BULK ORDERS — page logic
    Sections: helpers · tracking · contacts · deadline · decor · products &
-   quote tray · tabs · filters · FAQ · carousel · form · dock · motion
+   quote tray · filters · FAQ · carousel · form · dock · motion
+   (diya, LED lights, marigolds, lanterns, dock behaviour: components.js)
    ========================================================================== */
 (function () {
   'use strict';
@@ -20,9 +21,6 @@
   const byId = Object.fromEntries(products.map((p) => [p.id, p]));
   const inrFmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 });
   const inr = (n) => inrFmt.format(Math.round(n));
-  // Product photos are used exactly as provided (1086×1448, 3:4). Paths contain spaces, so encode them.
-  const imgSrc = (p) => encodeURI(p.image);
-  const IMG_DIMS = 'width="1086" height="1448"';
   const savePct = (p) => Math.round((1 - p.bulk / p.retail) * 100);
   const gstNote = (C.pricing && C.pricing.gstNote) || '+ GST';
 
@@ -89,7 +87,6 @@
     $$('[data-mail]').forEach((a) => { a.href = `mailto:${contact.email}?subject=${encodeURIComponent('Diwali bulk order inquiry')}`; });
     $$('[data-phone-display]').forEach((el) => { el.textContent = contact.phoneDisplay; });
     $$('[data-email-display]').forEach((el) => { el.textContent = contact.email; });
-    $$('[data-hours]').forEach((el) => { el.textContent = contact.hours; });
     $$('[data-gst-note]').forEach((el) => { el.textContent = gstNote; });
     const minPrice = Math.min(...products.map((p) => p.bulk));
     $$('[data-min-price]').forEach((el) => { el.textContent = inr(minPrice); });
@@ -136,95 +133,9 @@
   }
 
   /* ------------------------------------------------------------------------
-     Festive decor (placeholders until custom graphics arrive)
+     Festive decor now lives in components.js (NextroUI.diya / lights / marigold / dock)
      ------------------------------------------------------------------------ */
-  const DIYA_SVG = `
-    <svg viewBox="0 0 120 110" aria-hidden="true" focusable="false">
-      <circle class="diya__glow" cx="60" cy="38" r="40" fill="url(#g-flame-glow)"/>
-      <g class="diya__flame">
-        <path d="M60 6c9 15 15 26 13 36-1.6 8-7 12-13 12s-11.4-4-13-12c-2-10 4-21 13-36Z" fill="url(#g-flame)"/>
-        <path d="M60 27c4 7 7 12 6 17-.8 4-3.4 6-6 6s-5.2-2-6-6c-1-5 2-10 6-17Z" fill="#FFF6CC"/>
-      </g>
-      <path d="M60 54v7" stroke="#5A3A1E" stroke-width="2.5" stroke-linecap="round"/>
-      <path d="M6 62c18-6 90-6 108 0-3 26-24 42-54 42S9 88 6 62Z" fill="url(#g-diya)"/>
-      <path d="M6 62c18-6 90-6 108 0-18 7-90 7-108 0Z" fill="#7A2A0A"/>
-      <path d="M22 80c12 5 64 5 76 0" stroke="#FFC21A" stroke-width="3.5" stroke-linecap="round" fill="none" stroke-dasharray=".5 9"/>
-      <path d="M32 93c10 3 46 3 56 0" stroke="#FFD66B" stroke-width="2" stroke-linecap="round" fill="none" opacity=".55"/>
-    </svg>`;
-
-  function renderDiyas() {
-    $$('[data-diya]').forEach((el) => { el.innerHTML = DIYA_SVG; });
-  }
-
-  const BULB_COLORS = [
-    { fill: '#FFC21A', glow: 'a' },
-    { fill: '#FF8A00', glow: 'b' },
-    { fill: '#FF5C8A', glow: 'c' },
-    { fill: '#FFF1C9', glow: 'd' },
-  ];
-  const SVG_NS = 'http://www.w3.org/2000/svg';
-
-  function buildLights(el) {
-    const w = el.clientWidth;
-    const h = el.clientHeight || 110;
-    if (!w) return;
-    const small = w < 640;
-    const swags = small ? 2 : w < 1100 ? 3 : 4;
-    const spacing = small ? 44 : 60;
-    const top = 4;
-    const sag = h * (small ? 0.34 : 0.42);
-    const seg = (w + 20) / swags;
-
-    let d = `M -10 ${top}`;
-    for (let i = 0; i < swags; i++) {
-      const x0 = -10 + i * seg;
-      const x1 = x0 + seg;
-      d += ` Q ${(x0 + x1) / 2} ${top + sag * 2} ${x1} ${top}`;
-    }
-
-    const svg = document.createElementNS(SVG_NS, 'svg');
-    svg.setAttribute('viewBox', `0 0 ${w} ${h}`);
-    svg.setAttribute('focusable', 'false');
-    const path = document.createElementNS(SVG_NS, 'path');
-    path.setAttribute('d', d);
-    path.setAttribute('class', 'wire');
-    svg.appendChild(path);
-    el.replaceChildren(svg);
-
-    const total = path.getTotalLength();
-    let i = 0;
-    for (let l = spacing / 2; l < total; l += spacing, i++) {
-      const pt = path.getPointAtLength(l);
-      if (pt.x < -4 || pt.x > w + 4) continue;
-      const c = BULB_COLORS[i % BULB_COLORS.length];
-      const g = document.createElementNS(SVG_NS, 'g');
-      g.setAttribute('class', 'bulb');
-      g.setAttribute('transform', `translate(${pt.x.toFixed(1)} ${pt.y.toFixed(1)}) rotate(${((i % 3) - 1) * 8})`);
-      g.innerHTML = `
-        <circle class="bulb__glow" cx="0" cy="9" r="17" fill="url(#g-bulb-${c.glow})"/>
-        <rect x="-2.6" y="-1" width="5.2" height="5" rx="1.2" fill="#6B5240"/>
-        <ellipse class="bulb__glass" cx="0" cy="9.5" rx="4.6" ry="6.4" fill="${c.fill}"/>
-        <ellipse cx="-1.4" cy="7.4" rx="1.2" ry="2" fill="#fff" opacity=".6"/>`;
-      svg.appendChild(g);
-    }
-  }
-
-  function renderMarigolds() {
-    $$('[data-marigold]').forEach((el) => {
-      const n = parseInt(el.dataset.marigold, 10) || 5;
-      const step = 24;
-      const h = 12 + n * step + 18;
-      let flowers = '';
-      for (let i = 0; i < n; i++) {
-        const y = 18 + i * step;
-        const outer = i % 2 ? '#FFB703' : '#FF8A00';
-        const inner = i % 2 ? '#F59E0B' : '#E8590C';
-        flowers += `<circle cx="14" cy="${y}" r="10.5" fill="${outer}"/><circle cx="14" cy="${y}" r="6.5" fill="${inner}" opacity=".85"/><circle cx="14" cy="${y}" r="2.5" fill="#9A3412"/>`;
-      }
-      const tail = 18 + (n - 1) * step + 12;
-      el.innerHTML = `<svg width="28" height="${h}" viewBox="0 0 28 ${h}" aria-hidden="true"><path d="M14 0V${tail}" stroke="#E7C27A" stroke-width="1.2"/>${flowers}<path d="M14 ${tail}c-5 4-6 9-2 14 1-5 4-8 2-14Zm0 0c5 4 6 9 2 14-1-5-4-8-2-14Z" fill="#3F8F3A"/></svg>`;
-    });
-  }
+  const UI = window.NextroUI;
 
   /* ------------------------------------------------------------------------
      Products + quote tray
@@ -241,24 +152,55 @@
     return out;
   }
 
+  /* ---- Product cards (Figma 27:5690) ----
+     Every dimension below is in the Figma card's own pixels (384 wide). U() turns a number into calc(n * var(--u)),
+     where --u = card width / 384 (set in CSS) — so the artwork scales perfectly with the card on any screen. */
+  const U = (n) => `calc(${n} * var(--u))`;
+  const CARD_IMG = 'assets/img/cards/';
+  const img = (src, alt, style = '') => `<img class="pc-fill" src="${CARD_IMG}${src}" alt="${alt}"${style ? ` style="${style}"` : ''} draggable="false" loading="lazy" decoding="async">`;
+  const turned = (cx, cy, w, h, deg, inner) => `<div class="pc-abs" style="left:${U(cx)};top:${U(cy)};width:${U(w)};height:${U(h)};transform:translate(-50%,-50%) rotate(${deg}deg)">${inner}</div>`;
+  const CARD_ART = {
+    x300: () => `<div class="pc-abs" style="left:calc(50% + ${U(5.28)});top:${U(83.73)};width:${U(286.4)};height:${U(286.4)};transform:translateX(-50%)">${img('x300-product.png', 'Nextro X300 dashcam')}</div>`,
+    x600: () => `<div class="pc-abs" style="left:${U(22.85)};top:${U(80.72)};width:${U(327.467)};height:${U(327.467)}">
+        ${turned(163.7335, 163.7335, 263.512, 263.512, 16.49, img('x300-product.png', 'Nextro X600 dashcam'))}
+        ${turned(247.162, 131.311, 115.724, 58.531, -18.71, `<div class="pc-clip"><img src="${CARD_IMG}x600-rear.png" alt="" style="position:absolute;left:0;top:-73.24%;width:100%;height:263.62%;max-width:none" draggable="false" loading="lazy" decoding="async"></div>`)}
+        ${turned(221.723, 141.1605, 23.201, 3.839, -18.71, img('x600-detail.png', ''))}
+      </div>`,
+    x700: () => `<div class="pc-abs" style="left:50%;top:${U(98.13)};width:${U(314.133)};height:${U(314.133)};transform:translateX(-50%)">${img('x700-product.png', 'Nextro X700 dashcam')}</div>`,
+    x900: () => `<div class="pc-abs" style="left:${U(61.6)};top:${U(139.68)};width:${U(260.653)};height:${U(180.372)}">${img('x900-product.png', 'Nextro X900 dashcam')}</div>`,
+    n70: () => [
+      turned(197.12, 245.06, 170.37, 162, 11.41, img('n70-body.png', 'Nextro N70 wireless adaptor')),
+      turned(149.77, 279.33, 66.19, 52.1, 11.41, img('n70-plate.png', '', 'object-fit:fill')),
+      `<div class="pc-abs" style="left:${U(138.39)};top:${U(236.09)};width:${U(35.607)};height:${U(35.607)};background:#0e0e0e"></div>`,
+      turned(156.7, 260.16, 17.86, 24.504, -25.8, '<span style="position:absolute;inset:-4.36% -5.98%"><img class="pc-fill" src="assets/svg/figma/n70-ellipse-a.svg" alt="" style="object-fit:fill" draggable="false"></span>'),
+      turned(156.72, 260.07, 21.52, 29.525, -25.8, '<img class="pc-fill" src="assets/svg/figma/n70-ellipse-b.svg" alt="" style="object-fit:fill" draggable="false">'),
+    ].join(''),
+    n50: () => [
+      `<div class="pc-abs" style="left:${U(105.6)};top:${U(162.93)};width:${U(173.067)};height:${U(173.067)}">${img('n50-product.png', 'Nextro N50 wireless adaptor')}</div>`,
+      turned(185.47, 267.58, 27.87, 6.73, 27.03, '<img class="pc-fill" src="assets/svg/figma/n50-mark-a.svg" alt="" style="object-fit:fill" draggable="false">'),
+      turned(166.66, 258.09, 11.52, 6.47, 27.03, '<img class="pc-fill" src="assets/svg/figma/n50-mark-b.svg" alt="" style="object-fit:fill" draggable="false">'),
+    ].join(''),
+  };
+
   function cardHTML(p) {
-    // Minimal "offer card": the photo is the card; everything sits on it as solid plates (the photo itself is never tinted or cropped).
+    const c = p.card || { name: `Nextro ${p.name}`, bg: '' };
+    const save = savePct(p);
     return `
-      <article class="pcard" id="product-${p.id}" data-id="${p.id}" data-cat="${p.category}" data-reveal>
-        <img class="pcard__img" src="${imgSrc(p)}" alt="Nextro ${p.name} ${p.variant}" ${IMG_DIMS} loading="lazy" decoding="async">
-        <div class="pcard__tag">
-          <h3>${p.name}</h3>
-          <span>${p.variant}</span>
-        </div>
-        <a class="pcard__info" href="${p.url}" target="_blank" rel="noopener" aria-label="View ${p.name} full specs on getnextro.com (opens in a new tab)" title="Full specs">${icon('i-arrow-up-right')}</a>
-        <div class="pcard__plate">
-          <span class="pcard__burst"><svg aria-hidden="true"><use href="#burst"/></svg><span><small>Save</small><b>${savePct(p)}%</b></span></span>
-          <div class="pcard__price">
-            <p class="pcard__amount-row"><span class="pcard__amount">${inr(p.bulk)}</span><span class="pcard__per">/unit ${gstNote}</span></p>
-            <p class="pcard__meta"><s>${inr(p.retail)}</s><span class="pcard__moq">Min. ${p.moq} units</span><span class="pcard__inq">${icon('i-check')} In your quote</span></p>
+      <article class="pcard" id="product-${p.id}" data-id="${p.id}" data-cat="${p.category}" data-reveal aria-label="${c.name}: ${inr(p.bulk)} per unit ${gstNote}, minimum ${p.moq} units, save up to ${save}%">
+        <img class="pcard__bg" src="${c.bg}" alt="" width="1064" height="1478" loading="lazy" decoding="async" draggable="false">
+        <div class="pcard__stage">
+          ${(CARD_ART[p.id] || (() => ''))()}
+          <div class="pcard__name"><p>${c.name}</p>${c.sub ? `<p class="pcard__name-sub">${c.sub}</p>` : ''}</div>
+          <div class="pcard__band"><span aria-hidden="true">🪔</span> Save Upto ${save}%</div>
+          <div class="pcard__flower">
+            <span class="pcard__flower-art"><span><img src="assets/svg/figma/price-flower.svg" alt="" width="184" height="185" draggable="false"></span></span>
+            <div class="pcard__flower-text">
+              <div class="pcard__from"><p>Starting at</p><p class="pcard__amount">${inr(p.bulk)}</p></div>
+              ${c.showMin === false ? '' : `<p class="pcard__min">MIN ${p.moq} Units</p>`}
+            </div>
           </div>
           <div class="pcard__action" data-action>
-            <button type="button" class="btn btn--dark pcard__add" data-add aria-label="Add ${p.name} to quote (min. ${p.moq} units)">${icon('i-plus')} Add</button>
+            <button type="button" class="pcard__add" data-add aria-label="Add ${p.name} to quote (min. ${p.moq} units)">${icon('i-plus')} Add</button>
             <div class="pcard__stepper" hidden>
               <div class="stepper">
                 <button type="button" data-dec aria-label="Decrease ${p.name} quantity">${icon('i-minus')}</button>
@@ -398,110 +340,6 @@
   }
 
   /* ------------------------------------------------------------------------
-     Use-case tabs
-     ------------------------------------------------------------------------ */
-  let activeUseCase = '';
-
-  function renderPicks() {
-    $$('.tab-panel').forEach((panel) => {
-      const ids = (panel.dataset.picks || '').split(',').map((s) => s.trim()).filter((id) => byId[id]);
-      const slot = $('[data-picks-slot]', panel);
-      if (!slot) return;
-      slot.innerHTML = `
-        <p class="picks__label">Best picks</p>
-        <div class="picks__grid">
-          ${ids.map((id) => {
-            const p = byId[id];
-            return `
-              <button type="button" class="pick" data-goto="${p.id}">
-                <span class="pick__media"><img src="${imgSrc(p)}" alt="" ${IMG_DIMS} loading="lazy" decoding="async"></span>
-                <span class="pick__name">${p.name}<small>${p.variant}</small></span>
-                <span class="pick__price">${inr(p.bulk)}<small>/unit · min. ${p.moq}</small></span>
-                <span class="pick__go">See details ${icon('i-arrow')}</span>
-              </button>`;
-          }).join('')}
-        </div>`;
-    });
-  }
-
-  function initTabs() {
-    const wrap = $('[data-tabs]');
-    if (!wrap) return;
-    const tabs = $$('[role="tab"]', wrap);
-    const panels = $$('[role="tabpanel"]', wrap);
-    activeUseCase = panels[0] ? panels[0].dataset.usecase : '';
-
-    function select(tab, focus) {
-      tabs.forEach((t) => {
-        const on = t === tab;
-        t.setAttribute('aria-selected', String(on));
-        t.tabIndex = on ? 0 : -1;
-      });
-      panels.forEach((p) => {
-        const on = p.id === tab.getAttribute('aria-controls');
-        if (on && p.hidden) {
-          p.hidden = false;
-          activeUseCase = p.dataset.usecase;
-          if (canAnimate) {
-            gsap.fromTo(p.children, { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.5, stagger: 0.08, ease: 'power3.out' });
-          }
-        } else if (!on) {
-          p.hidden = true;
-        }
-      });
-      if (focus) tab.focus();
-      tab.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduceMotion ? 'auto' : 'smooth' });
-      track('usecase_select', { usecase: activeUseCase });
-    }
-
-    tabs.forEach((tab, i) => {
-      tab.addEventListener('click', () => select(tab, false));
-      tab.addEventListener('keydown', (e) => {
-        let next = null;
-        if (e.key === 'ArrowRight') next = tabs[(i + 1) % tabs.length];
-        else if (e.key === 'ArrowLeft') next = tabs[(i - 1 + tabs.length) % tabs.length];
-        else if (e.key === 'Home') next = tabs[0];
-        else if (e.key === 'End') next = tabs[tabs.length - 1];
-        if (next) { e.preventDefault(); select(next, true); }
-      });
-    });
-
-    wrap.addEventListener('click', (e) => {
-      const pick = e.target.closest('[data-goto]');
-      if (pick) goToProduct(pick.dataset.goto);
-
-      const cta = e.target.closest('[data-quote-usecase]');
-      if (cta) {
-        const panel = cta.closest('.tab-panel');
-        const useCase = $('input[name="use_case"]');
-        if (useCase) useCase.value = panel.dataset.usecase;
-        const anyChecked = $$('input[name="products"]:checked').length > 0;
-        if (!anyChecked) {
-          (panel.dataset.picks || '').split(',').forEach((id) => {
-            const p = byId[id.trim()];
-            const cb = p && $(`input[name="products"][value="${p.name}"]`);
-            if (cb) cb.checked = true;
-          });
-          updateMoqHint();
-        }
-        track('cta_click', { location: 'usecase', usecase: panel.dataset.usecase });
-      }
-    });
-  }
-
-  function goToProduct(id) {
-    const card = $(`#product-${id}`);
-    if (!card) return;
-    if (card.style.display === 'none') setFilter('all');
-    scrollToEl(card, () => {
-      card.classList.remove('is-highlight');
-      void card.offsetWidth;
-      card.classList.add('is-highlight');
-      setTimeout(() => card.classList.remove('is-highlight'), 3400);
-    }, -(headerHeight() + 24));
-  }
-
-  /* ------------------------------------------------------------------------
      Product filter
      ------------------------------------------------------------------------ */
   function setFilter(cat) {
@@ -581,15 +419,14 @@
   function renderProductChoices() {
     const wrap = $('[data-product-choices]');
     if (!wrap) return;
-    wrap.innerHTML = products.map((p) => `
+    wrap.innerHTML = products.map((p) => {
+      const chip = p.chip || { label: p.variant, image: '' };
+      return `
       <label class="pchoice">
         <input type="checkbox" name="products" value="${p.name}" data-id="${p.id}">
-        <span><img src="${imgSrc(p)}" alt="" ${IMG_DIMS} loading="lazy" decoding="async"><b>${p.name}</b><small>${p.variant}</small></span>
-      </label>`).join('') + `
-      <label class="pchoice">
-        <input type="checkbox" name="products" value="Not sure — help me choose">
-        <span><i class="pchoice__icon">${icon('i-gift')}</i><b>Not sure</b><small>Help me choose</small></span>
+        <span>${chip.image ? `<img src="${chip.image}" alt="" width="44" height="44" loading="lazy" decoding="async">` : ''}<span class="pchoice__txt"><b>${p.name}</b><small>${chip.label}</small></span></span>
       </label>`;
+    }).join('');
   }
 
   const fieldInputs = (name) => $$(`[name="${name}"]`, form);
@@ -728,7 +565,6 @@
       addons: fd.getAll('addons'),
       packaging: (fd.get('packaging') || '').trim(),
       source: fd.get('source') || '',
-      use_case: fd.get('use_case') || activeUseCase,
       quote_items: fd.get('quote_items') || '',
       quote_estimate: totals().value || '',
       utm_source: fd.get('utm_source') || '',
@@ -801,7 +637,7 @@
       const data = collect();
       try {
         await submit(data);
-        track('generate_lead', { products: data.products.join(', '), quantity: data.quantity, city: data.city, use_case: data.use_case });
+        track('generate_lead', { products: data.products.join(', '), quantity: data.quantity, city: data.city });
         onSuccess(data, btn);
       } catch (err) {
         console.error('[Nextro] Submit failed', err);
@@ -870,26 +706,11 @@
      Header + dock + smooth anchors
      ------------------------------------------------------------------------ */
   const headerHeight = () => ($('.header') ? $('.header').offsetHeight : 68);
-  const visible = { hero: true, quote: false, finale: false, footer: false };
-
-  function updateDock() {
-    const dock = $('[data-dock]');
-    if (!dock) return;
-    const hasItems = dock.classList.contains('has-items');
-    const show = (!visible.hero || hasItems) && !visible.quote && !visible.finale && !visible.footer;
-    dock.classList.toggle('is-visible', show);
-  }
+  let dockUI = null;
+  const updateDock = () => { if (dockUI) dockUI.update(); };
 
   function initDock() {
-    const watch = [['hero', '.hero'], ['quote', '#quote'], ['finale', '#finale'], ['footer', '.footer']];
-    const io = new IntersectionObserver((entries) => {
-      entries.forEach((en) => { visible[en.target.dataset.watch] = en.isIntersecting; });
-      updateDock();
-    }, { rootMargin: '0px 0px -15% 0px' });
-    watch.forEach(([key, sel]) => {
-      const el = $(sel);
-      if (el) { el.dataset.watch = key; io.observe(el); }
-    });
+    dockUI = UI.dock.mount($('[data-dock]'), { after: '.hero', hideOn: ['#quote', '#finale', '.footer'] });
 
     const header = $('.header');
     const onScroll = () => header.classList.toggle('is-scrolled', window.scrollY > 40);
@@ -927,7 +748,7 @@
   }
 
   /* ------------------------------------------------------------------------
-     Flags (logos, counter, referral)
+     Flags (logos, counter)
      ------------------------------------------------------------------------ */
   function applyFlags() {
     const f = C.flags || {};
@@ -941,124 +762,22 @@
       $('[data-counter-value]').textContent = f.counterValue;
       counter.hidden = false;
     }
-    const referral = $('[data-referral]');
-    if (referral && f.showReferral === false) referral.hidden = true;
   }
 
   /* ------------------------------------------------------------------------
      Motion (GSAP + ScrollTrigger + Lenis)
      ------------------------------------------------------------------------ */
-  function splitWords(el) {
-    const walk = (node) => {
-      Array.from(node.childNodes).forEach((n) => {
-        if (n.nodeType === 3) {
-          const frag = document.createDocumentFragment();
-          n.textContent.split(/(\s+)/).forEach((part) => {
-            if (!part) return;
-            if (/^\s+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
-            const w = document.createElement('span');
-            w.className = 'w';
-            const inner = document.createElement('span');
-            inner.className = 'w__i';
-            inner.textContent = part;
-            w.appendChild(inner);
-            frag.appendChild(w);
-          });
-          n.replaceWith(frag);
-        } else if (n.nodeType === 1) {
-          walk(n);
-        }
-      });
-    };
-    walk(el);
-  }
-
-  function initFlames(flames) {
-    flames.forEach((f) => {
-      gsap.set(f, { transformOrigin: '50% 100%' });
-      const flick = () => gsap.to(f, {
-        scaleY: gsap.utils.random(0.86, 1.14),
-        scaleX: gsap.utils.random(0.9, 1.06),
-        rotation: gsap.utils.random(-5, 5),
-        duration: gsap.utils.random(0.12, 0.3),
-        ease: 'sine.inOut',
-        onComplete: flick,
-      });
-      flick();
-    });
-  }
-
-  function twinkle(bulbs) {
-    bulbs.forEach((b) => {
-      const glow = b.querySelector('.bulb__glow');
-      gsap.to(glow, {
-        opacity: gsap.utils.random(0.25, 0.6),
-        duration: gsap.utils.random(0.6, 1.6),
-        repeat: -1,
-        yoyo: true,
-        ease: 'sine.inOut',
-        delay: gsap.utils.random(0, 1.5),
-      });
-    });
-  }
-
   function initLights() {
-    const hero = $('[data-lights="header"]');
+    const header = $('[data-lights="header"]');
     const finale = $('[data-lights="finale"]');
-    [hero, finale].forEach((el) => el && buildLights(el));
-
-    if (canAnimate) {
-      if (hero) twinkle($$('.bulb', hero));
-      if (finale) {
-        const bulbs = $$('.bulb', finale);
-        gsap.set(bulbs, { opacity: 0.18 });
-        gsap.set($$('.bulb__glow', finale), { opacity: 0 });
-        ScrollTrigger.create({
-          trigger: '#finale',
-          start: 'top 70%',
-          once: true,
-          onEnter: () => {
-            gsap.to(bulbs, { opacity: 1, duration: 0.25, stagger: 0.06, ease: 'power1.out' });
-            gsap.to($$('.bulb__glow', finale), { opacity: 1, duration: 0.4, stagger: 0.06, onComplete: () => twinkle(bulbs) });
-          },
-        });
-      }
-    }
-
-    let lastW = window.innerWidth;
-    let t;
-    window.addEventListener('resize', () => {
-      if (Math.abs(window.innerWidth - lastW) < 40) return;
-      lastW = window.innerWidth;
-      clearTimeout(t);
-      t = setTimeout(() => {
-        [hero, finale].forEach((el) => {
-          if (!el) return;
-          if (canAnimate) gsap.killTweensOf($$('.bulb, .bulb__glow', el));
-          buildLights(el);
-          if (canAnimate) twinkle($$('.bulb', el));
-        });
-      }, 200);
-    });
+    UI.lights.mount(header);                          // pinned garland: draws + twinkles
+    UI.lights.mount(finale, { twinkle: false });      // closing garland: draws, then lights up on scroll
+    UI.lights.lightUp(finale, { trigger: '#finale', start: 'top 70%' });
   }
 
-  /* The pinned garland hands over to the closing section's own garland: once that section's top edge
-     reaches the pinned lights, they ride up with the edge and tuck under the header, so only one string is ever visible. */
+  // the pinned garland hands over to the closing section's own garland
   function initLightsHandoff() {
-    const frame = $('.lights--header');
-    const layer = frame && $('.lights__push', frame);
-    const finale = $('#finale');
-    if (!layer || !finale) return;
-    const update = () => {
-      const h = frame.offsetHeight;
-      const hangsAt = frame.getBoundingClientRect().top;        // where the pinned garland starts (viewport px)
-      const edge = finale.getBoundingClientRect().top;          // top edge of the closing section
-      const push = Math.min(0, Math.max(-h, edge - (hangsAt + h)));
-      layer.style.setProperty('--lights-push', `${push}px`);
-    };
-    window.addEventListener('scroll', update, { passive: true }); // scroll events already fire once per frame
-    window.addEventListener('resize', update);
-    update();
+    UI.lights.stickyHandoff($('.lights--header'), $('#finale'));
   }
 
   function initMotion() {
@@ -1073,35 +792,17 @@
       gsap.ticker.lagSmoothing(0);
     }
 
-    // Hero intro
-    const title = $('.hero__title');
-    if (title) splitWords(title);
+    // Hero intro: the garland drops in while the artwork eases into place
     const tl = gsap.timeline({ defaults: { ease: 'power3.out' } });
     tl.from('.lights--header svg', { y: -40, opacity: 0, duration: 1 }, 0)
-      .from('.hero .eyebrow', { y: 16, opacity: 0, duration: 0.6 }, 0.1)
-      .from('.hero__title .w__i', { yPercent: 110, duration: 0.9, stagger: 0.04 }, 0.2)
-      .fromTo('.hero__title .hl', { backgroundSize: '0% 0.3em' }, { backgroundSize: '100% 0.3em', duration: 0.8, ease: 'power2.inOut' }, 0.9)
-      .from(['.hero__sub', '.hero__ctas', '.hero__trust', '.hero__chip'], { y: 18, opacity: 0, duration: 0.7, stagger: 0.08 }, 0.55)
-      .from('.hv-glow', { scale: 0.5, opacity: 0, duration: 1.4 }, 0.1)
-      .from('.hv-card-wrap', { y: 70, rotation: -14, opacity: 0, duration: 1.1, ease: 'back.out(1.4)' }, 0.25)
-      .from('.hv-gift', { y: -160, opacity: 0, duration: 1, stagger: 0.13, ease: 'bounce.out' }, 0.5)
-      .from('.hv-diya', { scale: 0, opacity: 0, transformOrigin: '50% 100%', duration: 0.6, stagger: 0.1, ease: 'back.out(2.4)' }, 1.1)
-      .from(['.hv-price', '.hv-tag'], { scale: 0.5, opacity: 0, duration: 0.6, stagger: 0.12, ease: 'back.out(2.2)' }, 1.2)
-      .from('.hv-spark', { scale: 0, opacity: 0, duration: 0.5, stagger: 0.08 }, 1.3);
+      .from('.hero__art', { scale: 1.05, opacity: 0, duration: 1.5, ease: 'power2.out', transformOrigin: '50% 40%' }, 0);
 
-    // Idle loops in the hero
-    gsap.to('.hv-card-wrap', { y: -10, rotation: -2.5, duration: 3.2, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 1.6 });
-    gsap.to('.hv-price', { y: -8, duration: 2.6, repeat: -1, yoyo: true, ease: 'sine.inOut', delay: 2 });
-    gsap.to('.hv-spark', { scale: 0.55, opacity: 0.5, rotation: 25, duration: 1.4, repeat: -1, yoyo: true, ease: 'sine.inOut', stagger: { each: 0.35, from: 'random' }, delay: 2 });
-    initFlames($$('.diya__flame'));
-    gsap.to('.diya__glow', { opacity: 0.6, duration: 0.9, repeat: -1, yoyo: true, ease: 'sine.inOut', stagger: { each: 0.25, from: 'random' } });
-    $$('.marigold-strand').forEach((s, i) => {
-      gsap.set(s, { transformOrigin: '50% 0%' });
-      gsap.to(s, { rotation: i % 2 ? 3 : -3, duration: 2.4 + i * 0.3, repeat: -1, yoyo: true, ease: 'sine.inOut' });
-    });
+    // Idle loops
+    UI.diya.animate();
+    UI.marigold.animate();
 
     // Scroll reveals (hero handled by the intro timeline)
-    const reveals = $$('[data-reveal]').filter((el) => !el.closest('.hero__grid'));
+    const reveals = $$('[data-reveal]').filter((el) => !el.closest('.hero'));
     gsap.set(reveals, { opacity: 0, y: 32 });
     ScrollTrigger.batch(reveals, {
       start: 'top 90%',
@@ -1159,13 +860,11 @@
     applyContacts();
     initDeadline();
     applyFlags();
-    renderDiyas();
-    renderMarigolds();
+    UI.diya.render();
+    UI.marigold.render();
     renderProducts();
-    renderPicks();
     initForm();
     updateQuoteUI();
-    initTabs();
     initFilters();
     initAccordion();
     initCarousel();
